@@ -6,6 +6,10 @@ module.exports = {
       colors: {
         "gray-dark": "#1d1d1d",
         yellow: "#fec303",
+        red: "rgb(255,0,0)",
+      },
+      minHeight: {
+        section: "calc(100vh - 216px)",
       },
       fontSize: {
         xs: "0.75rem",

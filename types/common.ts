@@ -14,3 +14,10 @@ export type ApartmentOffer = {
   updated_at: string;
   image: Array<Attachment>;
 };
+
+export type ApartmentCategory = "rent" | "sell" | null;
+
+export type OfferFormStateType = {
+  title: string;
+  category: ApartmentCategory;
+};

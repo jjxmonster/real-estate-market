@@ -6,8 +6,8 @@ interface AppWrapperProps {
 
 const AppWrapper: FunctionComponent<AppWrapperProps> = ({ children }) => {
   return (
-    <div className="w-screen flex flex-col items-center">
-      <div className="max-w-screen-xl w-full flex-1">{children}</div>
+    <div className="w-screen flex flex-col items-center min-h-screen">
+      <div className="max-w-screen-xl w-full flex-1 relative">{children}</div>
     </div>
   );
 };

@@ -8,9 +8,9 @@ const LandingContainer: FunctionComponent = () => {
   const { push } = useRouter();
 
   return (
-    <section className="pt-52 h-96 relative">
-      <h2 className="text-white z-50 mb-12 font-bold text-7xl">
-        Find your dream home <br /> in one place.
+    <section className="pt-52 h-screen relative">
+      <h2 className="text-white z-50 mb-12 w-3/5 font-bold text-7xl">
+        Find your dream home in one place.
       </h2>
       <div className="absolute overflow-hidden rounded-md right-0 top-0 -z-30 after:absolute after:inset-0 after:z-30 after:w-full after:h-full after:bg-black after:opacity-50">
         <Image

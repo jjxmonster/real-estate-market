@@ -1,11 +1,16 @@
 import React, { FunctionComponent } from "react";
+import { useRouter } from "next/router";
 
 import Button from "../Button/Button";
 
 const Navbar: FunctionComponent = () => {
+  const { push } = useRouter();
   return (
-    <nav className="w-full py-10 flex items-center justify-between">
-      <h1 className="text-white flex items-center font-bold text-3xl relative">
+    <nav className="w-full py-10 flex items-center cursor-pointer justify-between">
+      <h1
+        className="text-white flex items-center font-bold text-3xl relative"
+        onClick={() => push("/")}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
