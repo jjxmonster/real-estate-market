@@ -19,5 +19,8 @@ export type ApartmentCategory = "rent" | "sell" | null;
 
 export type OfferFormStateType = {
   title: string;
+  address: string;
+  price: number;
+  description: string;
   category: ApartmentCategory;
 };

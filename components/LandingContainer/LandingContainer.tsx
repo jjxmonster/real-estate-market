@@ -20,7 +20,7 @@ const LandingContainer: FunctionComponent = () => {
           height={1000}
         />
       </div>
-      <Button label="Let's go" onClick={() => push("/offers")} />
+      <Button label="Let's go" onClick={() => push("/offers/new")} />
     </section>
   );
 };
