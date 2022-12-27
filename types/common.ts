@@ -22,5 +22,7 @@ export type OfferFormStateType = {
   address: string;
   price: number;
   description: string;
+  area: number;
   category: ApartmentCategory;
+  images: FileList | null;
 };

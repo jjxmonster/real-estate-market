@@ -33,7 +33,7 @@ const Offers: FunctionComponent<OffersProps> = ({ offers }) => {
     <div>
       <PageHeader
         title="Search properties"
-        description="Find your dream property for rent or buy."
+        description="Find your dream property for buy or rent."
       />
       <div className="grid gap-2 grid-cols-3">{renderApartments}</div>
     </div>

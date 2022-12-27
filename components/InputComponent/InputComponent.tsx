@@ -6,6 +6,7 @@ interface InputComponentProps {
   placeholder: string;
   register: UseFormRegisterReturn<string>;
   area?: boolean;
+  type: string;
 }
 
 const inputStyles =
@@ -16,6 +17,7 @@ const InputComponent: FunctionComponent<InputComponentProps> = ({
   placeholder,
   register,
   area = false,
+  type,
 }) => {
   return (
     <div>
@@ -28,6 +30,7 @@ const InputComponent: FunctionComponent<InputComponentProps> = ({
         />
       ) : (
         <input
+          type={type}
           {...register}
           placeholder={placeholder}
           className={inputStyles}

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { ApartmentCategory } from "../../types/common";
 import { ArrowDownIcon } from "../Icons/Icons";
 
 type ItemValue = string | null;
