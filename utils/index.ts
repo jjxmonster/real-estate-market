@@ -2,6 +2,10 @@ import { ApartmentCategory } from "../types/common";
 
 export const jsonFetcher = (url: string) => fetch(url).then(res => res.json());
 
+export const capitalizeFirstLetter = (text: string) => {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+};
+
 export const formatCurrency = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",
@@ -42,7 +46,7 @@ export const offerFormFields: Array<{
   },
   {
     key: "price",
-    label: "Price",
+    label: "Price [$]",
     type: "number",
     placeholder: "$0",
   },
@@ -60,7 +64,7 @@ export const offerFormFields: Array<{
   },
   {
     key: "area",
-    label: "Area",
+    label: "Area [m²]",
     type: "number",
     placeholder: "m²",
   },

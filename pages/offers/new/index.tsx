@@ -1,22 +1,49 @@
-import React, { FunctionComponent, useCallback, useEffect } from "react";
+import React, { FunctionComponent } from "react";
 import { useRecoilState } from "recoil";
 import { Controller, useForm } from "react-hook-form";
-
-import Dropdown from "../../../components/Dropdown/Dropdown";
-import InputComponent from "../../../components/InputComponent/InputComponent";
-import PageHeader from "../../../components/PageHeader/PageHeader";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 import { offerFormState } from "../../../atoms/atoms";
 import { categoryDropdownItems, offerFormFields } from "../../../utils";
 import { ApartmentCategory, OfferFormStateType } from "../../../types/common";
+
+import Dropdown from "../../../components/Dropdown/Dropdown";
+import InputComponent from "../../../components/InputComponent/InputComponent";
+import PageHeader from "../../../components/PageHeader/PageHeader";
 import UploadButton from "../../../components/UploadButton/UploadButton";
+import Button from "../../../components/Button/Button";
+
+const schema = yup
+  .object({
+    title: yup.string().required().min(5),
+    price: yup.number().required().min(1),
+    address: yup.string().required(),
+    category: yup.string().required(),
+    description: yup.string().required().min(10),
+    area: yup.number().required().min(10),
+    images: yup
+      .mixed()
+      .test(
+        "fileUpload",
+        "Upload Image is required",
+        value => value?.length && true
+      ),
+  })
+  .required();
 
 const NewOffer: FunctionComponent = () => {
-  const [
-    { title, category, address, description, price, area },
-    setOfferFormState,
-  ] = useRecoilState(offerFormState);
-  const { register, watch, control } = useForm<OfferFormStateType>({
+  const [{ title, category, address, description, price, area }] =
+    useRecoilState(offerFormState);
+  const {
+    register,
+    watch,
+    control,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm<OfferFormStateType>({
+    resolver: yupResolver(schema),
     defaultValues: {
       title,
       category,
@@ -27,11 +54,17 @@ const NewOffer: FunctionComponent = () => {
     },
   });
 
+  const onSubmit = handleSubmit(data => {
+    console.log(data);
+  });
+
   const renderFields = offerFormFields.map(
     ({ key, label, placeholder, type }) => {
       if (type === "file" && key === "images") {
         return (
           <UploadButton
+            error={errors[key]}
+            value={watch("images")}
             key={key}
             label="Images"
             register={register("images")}
@@ -48,6 +81,7 @@ const NewOffer: FunctionComponent = () => {
               const { value, onChange } = field;
               return (
                 <Dropdown
+                  error={errors[key]}
                   label={label}
                   items={categoryDropdownItems}
                   value={value}
@@ -60,69 +94,28 @@ const NewOffer: FunctionComponent = () => {
       }
       return (
         <InputComponent
+          error={errors[key]}
           area={type === "area"}
           key={key}
           type={type}
           register={register(key)}
-          label={label}
+          label={`${label} ${
+            (key === "price" && watch("category")) === "rent" ? "/month" : ""
+          }`}
           placeholder={placeholder}
         />
       );
     }
   );
 
-  // useEffect(() => {
-  //   return () => {
-  //     let updatedObject = {};
-  //     Object.entries(getValues()).map(value => {
-  //       updatedObject = { ...updatedObject, [String(value[0])]: value[1] };
-  //     });
-
-  //     setOfferFormState(prevState => {
-  //       console.log({ ...updatedObject });
-  //       return {
-  //         ...Object.freeze(prevState),
-  //         // ...Object.freeze(updatedObject),
-  //       };
-  //     });
-  //   };
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-  const renderImages = () => {
-    const attachments = watch("images");
-
-    if (attachments != null) {
-      const reader = new FileReader();
-      const images = [...attachments];
-
-      return images.map((image, index) => {
-        return (
-          <div
-            key={URL.createObjectURL(image)}
-            className="w-52 h-52 overflow-hidden"
-          >
-            <img
-              className="w-52 h-52 object-cover"
-              alt={`Attached image number ${index + 1}`}
-              src={URL.createObjectURL(image)}
-            />
-          </div>
-        );
-      });
-    } else {
-      return null;
-    }
-  };
   return (
     <div className="flex flex-col items-center">
       <PageHeader
         title="Create new offer"
         description="Fill the form below and sell or rent your property."
       />
-      <div className="w-3/4 flex flex-col gap-10">
-        {renderFields}
-        <div className="grid grid-cols-4 gap-4 mt-5">{renderImages()}</div>
-      </div>
+      <form className="w-3/4 flex flex-col gap-10">{renderFields}</form>
+      <Button onClick={onSubmit} label="Submit Offer" />
     </div>
   );
 };

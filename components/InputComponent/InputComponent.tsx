@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
+import { FieldError, UseFormRegisterReturn } from "react-hook-form";
+import { capitalizeFirstLetter } from "../../utils";
 
 interface InputComponentProps {
   label: string;
@@ -7,10 +8,11 @@ interface InputComponentProps {
   register: UseFormRegisterReturn<string>;
   area?: boolean;
   type: string;
+  error: FieldError | undefined;
 }
 
 const inputStyles =
-  "p-2 mt-2 text-white w-full outline-none ring-0 bg-transparent transition border-b-2 border-yellow";
+  "p-2 my-2 text-white w-full outline-none ring-0 bg-transparent transition border-b-2 border-yellow";
 
 const InputComponent: FunctionComponent<InputComponentProps> = ({
   label,
@@ -18,6 +20,7 @@ const InputComponent: FunctionComponent<InputComponentProps> = ({
   register,
   area = false,
   type,
+  error,
 }) => {
   return (
     <div>
@@ -35,6 +38,11 @@ const InputComponent: FunctionComponent<InputComponentProps> = ({
           placeholder={placeholder}
           className={inputStyles}
         />
+      )}
+      {error?.message && (
+        <p className="text-red font-medium">
+          {capitalizeFirstLetter(error.message)}
+        </p>
       )}
     </div>
   );

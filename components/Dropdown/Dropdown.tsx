@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { FieldError } from "react-hook-form";
 
 import { ArrowDownIcon } from "../Icons/Icons";
+import { capitalizeFirstLetter } from "../../utils";
 
 type ItemValue = string | null;
 
@@ -14,6 +16,7 @@ interface DropdownProps<T extends ItemValue> {
   items: Item<T>[];
   value: T;
   onChange: (value: T) => void;
+  error: FieldError | undefined;
 }
 
 function Dropdown<T extends ItemValue>({
@@ -21,6 +24,7 @@ function Dropdown<T extends ItemValue>({
   items,
   value,
   onChange,
+  error,
 }: DropdownProps<T>) {
   const [showItems, setShowItems] = useState(false);
 
@@ -48,7 +52,7 @@ function Dropdown<T extends ItemValue>({
       <div>
         <button
           onClick={() => setShowItems(prevState => !prevState)}
-          className="text-gray-dark mt-2 bg-yellow font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+          className="text-gray-dark my-2 bg-yellow font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
           type="button"
         >
           {displaySelectedValue}
@@ -69,6 +73,11 @@ function Dropdown<T extends ItemValue>({
           </ul>
         </div>
       </div>
+      {error?.message && (
+        <p className="text-red font-medium">
+          {capitalizeFirstLetter(error.message)}
+        </p>
+      )}
     </div>
   );
 }
