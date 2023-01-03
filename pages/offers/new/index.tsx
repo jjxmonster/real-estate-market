@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { offerFormState } from "../../../atoms/atoms";
 import { categoryDropdownItems, offerFormFields } from "../../../utils";
 import { ApartmentCategory, OfferFormStateType } from "../../../types/common";
+import uploadimage from "../../../services/offers/upload";
 
 import Dropdown from "../../../components/Dropdown/Dropdown";
 import InputComponent from "../../../components/InputComponent/InputComponent";
@@ -19,10 +20,10 @@ const schema = yup
     title: yup.string().required().min(5),
     price: yup.number().required().min(1),
     address: yup.string().required(),
-    category: yup.string().required(),
+    category: yup.string().typeError("Category is a required field"),
     description: yup.string().required().min(10),
     area: yup.number().required().min(10),
-    images: yup
+    image: yup
       .mixed()
       .test(
         "fileUpload",
@@ -54,20 +55,29 @@ const NewOffer: FunctionComponent = () => {
     },
   });
 
-  const onSubmit = handleSubmit(data => {
-    console.log(data);
+  const onSubmit = handleSubmit(async payload => {
+    payload.image &&
+      (await uploadimage(payload.image).then(async res => {
+        await fetch("/api/offers", {
+          method: "POST",
+          body: JSON.stringify({ ...payload, image: res }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      }));
   });
 
   const renderFields = offerFormFields.map(
     ({ key, label, placeholder, type }) => {
-      if (type === "file" && key === "images") {
+      if (type === "file" && key === "image") {
         return (
           <UploadButton
             error={errors[key]}
-            value={watch("images")}
+            value={watch("image")}
             key={key}
-            label="Images"
-            register={register("images")}
+            label="image"
+            register={register("image")}
           />
         );
       }
@@ -112,7 +122,7 @@ const NewOffer: FunctionComponent = () => {
     <div className="flex flex-col items-center">
       <PageHeader
         title="Create new offer"
-        description="Fill the form below and sell or rent your property."
+        description="Fill the form below and create an offer with your property."
       />
       <form className="w-3/4 flex flex-col gap-10">{renderFields}</form>
       <Button onClick={onSubmit} label="Submit Offer" />

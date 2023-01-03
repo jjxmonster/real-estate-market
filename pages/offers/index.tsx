@@ -16,13 +16,21 @@ const Offers: FunctionComponent<OffersProps> = ({ offers }) => {
   const { data } = useSWR("/api/offers", jsonFetcher, { fallbackData: offers });
 
   const renderApartments = data.map(
-    ({ id, title, area, image, category, location, price }: ApartmentOffer) => (
+    ({
+      id,
+      title,
+      area,
+      image_url,
+      category,
+      location,
+      price,
+    }: ApartmentOffer) => (
       <ApartmentCard
         price={price}
         key={id}
         title={title}
         area={area}
-        image_url={image[0].url}
+        image_url={image_url}
         category={category}
         location={location}
       />

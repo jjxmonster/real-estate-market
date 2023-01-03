@@ -12,6 +12,6 @@ export const offerFormState = atom<OfferFormStateType>({
     description: "",
     area: 0,
     category: null,
-    images: null,
+    image: null,
   },
 });

@@ -12,7 +12,7 @@ export type ApartmentOffer = {
   status: string;
   title: string;
   updated_at: string;
-  image: Array<Attachment>;
+  image_url: string;
 };
 
 export type ApartmentCategory = "rent" | "sell" | null;
@@ -24,5 +24,15 @@ export type OfferFormStateType = {
   description: string;
   area: number;
   category: ApartmentCategory;
-  images: FileList | null;
+  image: FileList | null;
+};
+
+export type OfferPayload = {
+  title: string;
+  address: string;
+  price: number;
+  description: string;
+  area: number;
+  category: "rent" | "sell";
+  image: Array<string>;
 };

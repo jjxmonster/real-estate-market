@@ -27,7 +27,7 @@ export const offerFormFields: Array<{
     | "description"
     | "price"
     | "area"
-    | "images";
+    | "image";
   label: string;
   type: string;
   placeholder: string;
@@ -69,8 +69,8 @@ export const offerFormFields: Array<{
     placeholder: "m²",
   },
   {
-    key: "images",
-    label: "Images",
+    key: "image",
+    label: "image",
     placeholder: "",
     type: "file",
   },

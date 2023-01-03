@@ -18,13 +18,13 @@ const UploadButton: FunctionComponent<UploadButtonProps> = ({
   value,
   error,
 }) => {
-  const renerAttachedImages = () => {
+  const renerAttachedimage = () => {
     const attachments = value;
 
     if (attachments != null) {
-      const images = [...attachments];
+      const image = [...attachments];
 
-      return images.map((image, index) => {
+      return image.map((image, index) => {
         return (
           <div
             key={URL.createObjectURL(image)}
@@ -41,7 +41,7 @@ const UploadButton: FunctionComponent<UploadButtonProps> = ({
         );
       });
     } else {
-      return <div className="text-white">No images attached.</div>;
+      return <div className="text-white">No image attached.</div>;
     }
   };
   return (
@@ -71,7 +71,7 @@ const UploadButton: FunctionComponent<UploadButtonProps> = ({
           {capitalizeFirstLetter(error.message)}
         </p>
       )}
-      <div className="grid grid-cols-4 gap-4 mt-5">{renerAttachedImages()}</div>
+      <div className="grid grid-cols-4 gap-4 mt-5">{renerAttachedimage()}</div>
     </div>
   );
 };
