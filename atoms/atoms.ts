@@ -7,11 +7,11 @@ export const offerFormState = atom<OfferFormStateType>({
   key: "offerFormState",
   default: {
     title: "",
-    address: "",
+    location: "",
     price: 0,
     description: "",
     area: 0,
     category: null,
-    image: null,
+    image_url: null,
   },
 });

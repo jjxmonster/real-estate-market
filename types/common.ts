@@ -19,20 +19,20 @@ export type ApartmentCategory = "rent" | "sell" | null;
 
 export type OfferFormStateType = {
   title: string;
-  address: string;
+  location: string;
   price: number;
   description: string;
   area: number;
   category: ApartmentCategory;
-  image: FileList | null;
+  image_url: FileList | null;
 };
 
 export type OfferPayload = {
   title: string;
-  address: string;
+  location: string;
   price: number;
   description: string;
   area: number;
   category: "rent" | "sell";
-  image: Array<string>;
+  image_url: string;
 };

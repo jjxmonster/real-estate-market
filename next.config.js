@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["v5.airtableusercontent.com"],
+    domains: ["rnxqwvvekxijjdhjavnm.supabase.co"],
   },
 };
 

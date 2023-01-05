@@ -13,7 +13,7 @@ const offersApi = async (req: NextApiRequest, res: NextApiResponse) => {
     }
     case "POST": {
       const payload = req.body;
-
+      console.log(payload);
       const offer = await createOffer(payload);
 
       res.status(200).json({ status: "created", offer });

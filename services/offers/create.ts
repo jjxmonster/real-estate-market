@@ -3,7 +3,6 @@ import airDB from "../airtableClient";
 import { OfferPayload } from "../../types/common";
 
 const create = async (payload: OfferPayload) => {
-  console.log(payload);
   const offer = await airDB("offers").create([
     {
       fields: {

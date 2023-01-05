@@ -23,11 +23,11 @@ export const offerFormFields: Array<{
   key:
     | "title"
     | "category"
-    | "address"
+    | "location"
     | "description"
     | "price"
     | "area"
-    | "image";
+    | "image_url";
   label: string;
   type: string;
   placeholder: string;
@@ -51,8 +51,8 @@ export const offerFormFields: Array<{
     placeholder: "$0",
   },
   {
-    key: "address",
-    label: "Address",
+    key: "location",
+    label: "Location",
     type: "text",
     placeholder: "Street 12, New York",
   },
@@ -69,7 +69,7 @@ export const offerFormFields: Array<{
     placeholder: "m²",
   },
   {
-    key: "image",
+    key: "image_url",
     label: "image",
     placeholder: "",
     type: "file",

@@ -19,11 +19,11 @@ const schema = yup
   .object({
     title: yup.string().required().min(5),
     price: yup.number().required().min(1),
-    address: yup.string().required(),
+    location: yup.string().required(),
     category: yup.string().typeError("Category is a required field"),
     description: yup.string().required().min(10),
     area: yup.number().required().min(10),
-    image: yup
+    image_url: yup
       .mixed()
       .test(
         "fileUpload",
@@ -34,7 +34,7 @@ const schema = yup
   .required();
 
 const NewOffer: FunctionComponent = () => {
-  const [{ title, category, address, description, price, area }] =
+  const [{ title, category, location, description, price, area }] =
     useRecoilState(offerFormState);
   const {
     register,
@@ -48,7 +48,7 @@ const NewOffer: FunctionComponent = () => {
     defaultValues: {
       title,
       category,
-      address,
+      location,
       description,
       price,
       area,
@@ -56,11 +56,12 @@ const NewOffer: FunctionComponent = () => {
   });
 
   const onSubmit = handleSubmit(async payload => {
-    payload.image &&
-      (await uploadimage(payload.image).then(async res => {
+    payload.image_url &&
+      (await uploadimage(payload.image_url).then(async res => {
+        console.log(res);
         await fetch("/api/offers", {
           method: "POST",
-          body: JSON.stringify({ ...payload, image: res }),
+          body: JSON.stringify({ ...payload, image_url: res }),
           headers: {
             "Content-Type": "application/json",
           },
@@ -70,14 +71,14 @@ const NewOffer: FunctionComponent = () => {
 
   const renderFields = offerFormFields.map(
     ({ key, label, placeholder, type }) => {
-      if (type === "file" && key === "image") {
+      if (type === "file" && key === "image_url") {
         return (
           <UploadButton
             error={errors[key]}
-            value={watch("image")}
+            value={watch("image_url")}
             key={key}
             label="image"
-            register={register("image")}
+            register={register("image_url")}
           />
         );
       }
