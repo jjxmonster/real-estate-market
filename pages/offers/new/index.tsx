@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { offerFormState } from "../../../atoms/atoms";
+import { loadingState, offerFormState } from "../../../atoms/atoms";
 import { categoryDropdownItems, offerFormFields } from "../../../utils";
 import { ApartmentCategory, OfferFormStateType } from "../../../types/common";
 import uploadimage from "../../../services/offers/upload";
@@ -36,6 +36,8 @@ const schema = yup
 const NewOffer: FunctionComponent = () => {
   const [{ title, category, location, description, price, area }] =
     useRecoilState(offerFormState);
+  const setLoadingState = useSetRecoilState(loadingState);
+
   const {
     register,
     watch,
@@ -56,16 +58,16 @@ const NewOffer: FunctionComponent = () => {
   });
 
   const onSubmit = handleSubmit(async payload => {
+    setLoadingState({ isLoading: true, message: "Creating New Offer..." });
     payload.image_url &&
-      (await uploadimage(payload.image_url).then(async res => {
-        console.log(res);
+      (await uploadimage(payload.image_url).then(async image_url => {
         await fetch("/api/offers", {
           method: "POST",
-          body: JSON.stringify({ ...payload, image_url: res }),
+          body: JSON.stringify({ ...payload, image_url }),
           headers: {
             "Content-Type": "application/json",
           },
-        });
+        }).then(res => setLoadingState({ isLoading: false, message: "" }));
       }));
   });
 

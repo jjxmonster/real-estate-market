@@ -1,4 +1,7 @@
-import { Attachment } from "airtable";
+export interface LoadingStateType {
+  isLoading: boolean;
+  message: string;
+}
 
 export type ApartmentOffer = {
   area: number;
