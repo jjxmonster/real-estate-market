@@ -37,6 +37,7 @@ const ApartmentCard: FunctionComponent<ApartmentCardProps> = ({
       </div>
       <p className="px-6 text-yellow text-xl font-extrabold">
         {formatCurrency.format(price)}
+        {category === "rent" ? " /month" : ""}
       </p>
       <div className="px-6 py-4">
         <div className="font-extrabold text-white text-xl mb-2">{title}</div>

@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from "react";
+import { useRouter } from "next/router";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -37,13 +38,13 @@ const NewOffer: FunctionComponent = () => {
   const [{ title, category, location, description, price, area }] =
     useRecoilState(offerFormState);
   const setLoadingState = useSetRecoilState(loadingState);
+  const { push } = useRouter();
 
   const {
     register,
     watch,
     control,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm<OfferFormStateType>({
     resolver: yupResolver(schema),
@@ -67,7 +68,10 @@ const NewOffer: FunctionComponent = () => {
           headers: {
             "Content-Type": "application/json",
           },
-        }).then(res => setLoadingState({ isLoading: false, message: "" }));
+        }).then(() => {
+          setLoadingState({ isLoading: false, message: "" });
+          push("/offers/thanks");
+        });
       }));
   });
 
