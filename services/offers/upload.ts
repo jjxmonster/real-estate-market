@@ -3,7 +3,7 @@ import supabase from "../supabaseClient";
 const upload = async (image: FileList): Promise<string> => {
   const { data, error } = await supabase.storage
     .from("images")
-    .upload(image[0].name, image[0]);
+    .upload(`${image[0].name}-${Date.now()}`, image[0]);
 
   if (error) {
     throw new Error("Upload image error");

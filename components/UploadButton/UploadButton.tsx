@@ -63,7 +63,7 @@ const UploadButton: FunctionComponent<UploadButtonProps> = ({
           className="hidden"
           id="file_input"
           type="file"
-          multiple
+          max={1}
         />
       </div>
       {error?.message && (

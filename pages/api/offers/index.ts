@@ -12,11 +12,14 @@ const offersApi = async (req: NextApiRequest, res: NextApiResponse) => {
       break;
     }
     case "POST": {
-      const payload = req.body;
-      console.log(payload);
-      const offer = await createOffer(payload);
+      try {
+        const payload = req.body;
 
-      res.status(200).json({ status: "created", offer });
+        const offer = await createOffer(payload);
+        res.status(200).json({ status: "created", offer });
+      } catch (err) {
+        res.status(422).json({ status: "not_created", err });
+      }
 
       break;
     }
