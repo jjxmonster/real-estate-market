@@ -44,8 +44,8 @@ const ApartmentCard: FunctionComponent<ApartmentCardProps> = ({
         <p className="text-gray-500 text-base">{location}</p>
       </div>
       <div className="pl-4 pt-4 pb-4 flex">
-        <Badge text={`${String(area)}m²`} icon={AreaIcon} />
-        <Badge text={category} icon={CategoryIcon} />
+        <Badge text={`${String(area)}m²`} icon={<AreaIcon />} />
+        <Badge text={category} icon={<CategoryIcon />} />
       </div>
     </div>
   );

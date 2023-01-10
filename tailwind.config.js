@@ -7,6 +7,9 @@ module.exports = {
         "gray-dark": "#1d1d1d",
         yellow: "#fec303",
         red: "rgb(255,0,0)",
+        danger: "#d32f2f",
+        information: "#0288d1",
+        success: "#388E3C",
       },
       minHeight: {
         section: "calc(100vh - 216px)",

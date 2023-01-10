@@ -54,7 +54,7 @@ const UploadButton: FunctionComponent<UploadButtonProps> = ({
             type="button"
           >
             Choose File
-            {UploadIcon}
+            <UploadIcon />
           </a>
         </label>
         <input

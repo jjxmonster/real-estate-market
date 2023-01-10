@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar/Navbar";
 import AppWrapper from "../components/AppWrapper/AppWrapper";
 import Footer from "../components/Footer/Footer";
 import LoadingIndicator from "../components/LoadingIndicator/LoadingIndicator";
+import NotificationCard from "../components/NotificationCard/NotificationCard";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -19,6 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Footer />
       </AppWrapper>
       <LoadingIndicator />
+      <NotificationCard />
     </RecoilRoot>
   );
 }

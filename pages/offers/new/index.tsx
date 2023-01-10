@@ -5,9 +5,17 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { loadingState, offerFormState } from "../../../atoms/atoms";
+import {
+  loadingState,
+  notificationState,
+  offerFormState,
+} from "../../../atoms/atoms";
 import { categoryDropdownItems, offerFormFields } from "../../../utils";
-import { ApartmentCategory, OfferFormStateType } from "../../../types/common";
+import {
+  ApartmentCategory,
+  NotificatonType,
+  OfferFormStateType,
+} from "../../../types/common";
 import uploadimage from "../../../services/offers/upload";
 
 import Dropdown from "../../../components/Dropdown/Dropdown";
@@ -38,6 +46,8 @@ const NewOffer: FunctionComponent = () => {
   const [{ title, category, location, description, price, area }] =
     useRecoilState(offerFormState);
   const setLoadingState = useSetRecoilState(loadingState);
+  const setNotificationState = useSetRecoilState(notificationState);
+
   const { push } = useRouter();
 
   const {
@@ -62,16 +72,26 @@ const NewOffer: FunctionComponent = () => {
     setLoadingState({ isLoading: true, message: "Creating New Offer..." });
     payload.image_url &&
       (await uploadimage(payload.image_url).then(async image_url => {
-        await fetch("/api/offers", {
+        const response = await fetch("/api/offers", {
           method: "POST",
           body: JSON.stringify({ ...payload, image_url }),
           headers: {
             "Content-Type": "application/json",
           },
-        }).then(() => {
+        });
+
+        if (response.ok) {
           setLoadingState({ isLoading: false, message: "" });
           push("/offers/thanks");
-        });
+        } else {
+          const payload = await response.json();
+          setLoadingState({ isLoading: false, message: "" });
+          setNotificationState({
+            isVisible: true,
+            type: NotificatonType.DANGER,
+            message: "Something went wrong with creating offer",
+          });
+        }
       }));
   });
 

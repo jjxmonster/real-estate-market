@@ -1,6 +1,10 @@
 import { atom } from "recoil";
 
-import { LoadingStateType, OfferFormStateType } from "../types/common";
+import {
+  LoadingStateType,
+  NotificationStateType,
+  OfferFormStateType,
+} from "../types/common";
 
 // OFFER FORM
 export const offerFormState = atom<OfferFormStateType>({
@@ -22,5 +26,15 @@ export const loadingState = atom<LoadingStateType>({
   default: {
     isLoading: false,
     message: "",
+  },
+});
+
+// NOTIFICATION
+export const notificationState = atom<NotificationStateType>({
+  key: "notificationState",
+  default: {
+    type: null,
+    message: "",
+    isVisible: false,
   },
 });
