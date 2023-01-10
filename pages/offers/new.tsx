@@ -9,20 +9,20 @@ import {
   loadingState,
   notificationState,
   offerFormState,
-} from "../../../atoms/atoms";
-import { categoryDropdownItems, offerFormFields } from "../../../utils";
+} from "../../atoms/atoms";
+import { categoryDropdownItems, offerFormFields } from "../../utils";
 import {
   ApartmentCategory,
   NotificatonType,
   OfferFormStateType,
-} from "../../../types/common";
-import uploadimage from "../../../services/offers/upload";
+} from "../../types/common";
+import uploadimage from "../../services/offers/upload";
 
-import Dropdown from "../../../components/Dropdown/Dropdown";
-import InputComponent from "../../../components/InputComponent/InputComponent";
-import PageHeader from "../../../components/PageHeader/PageHeader";
-import UploadButton from "../../../components/UploadButton/UploadButton";
-import Button from "../../../components/Button/Button";
+import Dropdown from "../../components/Dropdown/Dropdown";
+import InputComponent from "../../components/InputComponent/InputComponent";
+import PageHeader from "../../components/PageHeader/PageHeader";
+import UploadButton from "../../components/UploadButton/UploadButton";
+import Button from "../../components/Button/Button";
 
 const schema = yup
   .object({
@@ -70,6 +70,7 @@ const NewOffer: FunctionComponent = () => {
 
   const onSubmit = handleSubmit(async payload => {
     setLoadingState({ isLoading: true, message: "Creating New Offer..." });
+
     payload.image_url &&
       (await uploadimage(payload.image_url).then(async image_url => {
         const response = await fetch("/api/offers", {
@@ -85,11 +86,15 @@ const NewOffer: FunctionComponent = () => {
           push("/offers/thanks");
         } else {
           const payload = await response.json();
-          setLoadingState({ isLoading: false, message: "" });
+
+          setLoadingState({
+            isLoading: false,
+            message: "",
+          });
           setNotificationState({
             isVisible: true,
             type: NotificatonType.DANGER,
-            message: "Something went wrong with creating offer",
+            message: payload.err.details[0]?.message,
           });
         }
       }));

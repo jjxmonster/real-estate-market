@@ -56,7 +56,7 @@ function Dropdown<T extends ItemValue>({
           type="button"
         >
           {displaySelectedValue}
-          {ArrowDownIcon}
+          {<ArrowDownIcon />}
         </button>
 
         <div

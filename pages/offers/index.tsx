@@ -7,6 +7,7 @@ import { jsonFetcher } from "../../utils";
 import { ApartmentOffer } from "../../types/common";
 import ApartmentCard from "../../components/ApartmentCard/ApartmentCard";
 import PageHeader from "../../components/PageHeader/PageHeader";
+import { GetStaticProps } from "next";
 
 interface OffersProps {
   offers: Array<ApartmentOffer>;
@@ -50,7 +51,7 @@ const Offers: FunctionComponent<OffersProps> = ({ offers }) => {
 
 export default Offers;
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const offers = await getRecentOffers(3);
 
   return {

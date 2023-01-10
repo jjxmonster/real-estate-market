@@ -16,7 +16,7 @@ export const categoryDropdownItems: Array<{
   value: ApartmentCategory;
 }> = [
   { label: "Rent", value: "rent" },
-  { label: "Sell", value: "sell" },
+  { label: "Sale", value: "sale" },
 ];
 
 export const offerFormFields: Array<{

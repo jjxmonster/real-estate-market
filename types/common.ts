@@ -13,7 +13,7 @@ export type ApartmentOffer = {
   image_url: string;
 };
 
-export type ApartmentCategory = "rent" | "sell" | null;
+export type ApartmentCategory = "rent" | "sale" | null;
 
 export type OfferPayload = {
   title: string;
@@ -21,7 +21,7 @@ export type OfferPayload = {
   price: number;
   description: string;
   area: number;
-  category: "rent" | "sell";
+  category: "rent" | "sale";
   image_url: string;
 };
 export enum NotificatonType {

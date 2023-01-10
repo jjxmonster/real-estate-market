@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useRouter } from "next/router";
 
-import PageHeader from "../../../components/PageHeader/PageHeader";
-import Button from "../../../components/Button/Button";
+import PageHeader from "../../components/PageHeader/PageHeader";
+import Button from "../../components/Button/Button";
 
 const Thanks = () => {
   const { push } = useRouter();
