@@ -27,6 +27,7 @@ const Offers: FunctionComponent<OffersProps> = ({ offers }) => {
       price,
     }: ApartmentOffer) => (
       <ApartmentCard
+        id={id}
         price={price}
         key={id}
         title={title}
