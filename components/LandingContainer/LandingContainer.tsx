@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 import Button from "../Button/Button";
+import { URL } from "../../utils";
 
 const LandingContainer: FunctionComponent = () => {
   const { push } = useRouter();
@@ -20,7 +21,7 @@ const LandingContainer: FunctionComponent = () => {
           height={1000}
         />
       </div>
-      <Button label="Let's go" onClick={() => push("/offers/new")} />
+      <Button label="Let's go" onClick={() => push(URL.OFFERS_PAGE)} />
     </section>
   );
 };

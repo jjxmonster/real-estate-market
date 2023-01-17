@@ -10,7 +10,7 @@ import {
   notificationState,
   offerFormState,
 } from "../../atoms/atoms";
-import { categoryDropdownItems, offerFormFields } from "../../utils";
+import { URL, categoryDropdownItems, offerFormFields } from "../../utils";
 import {
   ApartmentCategory,
   NotificatonType,
@@ -83,7 +83,7 @@ const NewOffer: FunctionComponent = () => {
 
         if (response.ok) {
           setLoadingState({ isLoading: false, message: "" });
-          push("/offers/thanks");
+          push(URL.THANKS_PAGE);
         } else {
           const payload = await response.json();
 

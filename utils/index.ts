@@ -6,6 +6,14 @@ export const capitalizeFirstLetter = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
 
+export const URL = {
+  OFFERS_PAGE: "/offers",
+  HOME_PAGE: "/",
+  OFFER_PAGE: "/offers/",
+  THANKS_PAGE: "/offers/thanks",
+  NEW_OFFER_PAGE: "/offers/new",
+};
+
 export const formatCurrency = new Intl.NumberFormat("en-US", {
   style: "currency",
   currency: "USD",

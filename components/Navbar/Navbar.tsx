@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react";
 import { useRouter } from "next/router";
 
 import Button from "../Button/Button";
+import { URL } from "../../utils";
 
 const Navbar: FunctionComponent = () => {
   const { push } = useRouter();
@@ -9,14 +10,14 @@ const Navbar: FunctionComponent = () => {
     <nav className="w-full py-10 flex items-center cursor-pointer justify-between">
       <h1
         className="text-white flex items-center font-bold text-3xl relative"
-        onClick={() => push("/")}
+        onClick={() => push(URL.HOME_PAGE)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
-          className="w-12 h-12 stroke-yellow"
+          className="w-12 stroke-yellow"
         >
           <path
             strokeLinecap="round"
