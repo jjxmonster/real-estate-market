@@ -23,6 +23,7 @@ import InputComponent from "../../components/InputComponent/InputComponent";
 import PageHeader from "../../components/PageHeader/PageHeader";
 import UploadButton from "../../components/UploadButton/UploadButton";
 import Button from "../../components/Button/Button";
+import Head from "next/head";
 
 const schema = yup
   .object({
@@ -151,14 +152,19 @@ const NewOffer: FunctionComponent = () => {
   );
 
   return (
-    <div className="flex flex-col items-center">
-      <PageHeader
-        title="Create new offer"
-        description="Fill the form below and create an offer with your property."
-      />
-      <form className="w-3/4 flex flex-col gap-10">{renderFields}</form>
-      <Button onClick={onSubmit} label="Submit Offer" />
-    </div>
+    <>
+      <Head>
+        <title>HOME4U | New offer</title>
+      </Head>
+      <div className="flex flex-col items-center">
+        <PageHeader
+          title="Create new offer"
+          description="Fill the form below and create an offer with your property."
+        />
+        <form className="w-3/4 flex flex-col gap-10">{renderFields}</form>
+        <Button onClick={onSubmit} label="Submit Offer" />
+      </div>
+    </>
   );
 };
 

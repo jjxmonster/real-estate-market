@@ -8,6 +8,7 @@ import { ApartmentOffer } from "../../types/common";
 import ApartmentCard from "../../components/ApartmentCard/ApartmentCard";
 import PageHeader from "../../components/PageHeader/PageHeader";
 import { GetStaticProps } from "next";
+import Head from "next/head";
 
 interface OffersProps {
   offers: Array<ApartmentOffer>;
@@ -40,13 +41,18 @@ const Offers: FunctionComponent<OffersProps> = ({ offers }) => {
   );
 
   return (
-    <div>
-      <PageHeader
-        title="Search properties"
-        description="Find your dream property for buy or rent."
-      />
-      <div className="grid gap-2 grid-cols-3">{renderApartments}</div>
-    </div>
+    <>
+      <Head>
+        <title>HOME4U | Offers</title>
+      </Head>
+      <div>
+        <PageHeader
+          title="Search properties"
+          description="Find your dream property for buy or rent."
+        />
+        <div className="grid gap-2 grid-cols-3">{renderApartments}</div>
+      </div>
+    </>
   );
 };
 

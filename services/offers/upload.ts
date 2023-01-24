@@ -9,7 +9,7 @@ const upload = async (image: FileList): Promise<string> => {
     throw new Error("Upload image error");
   }
 
-  return `https://rnxqwvvekxijjdhjavnm.supabase.co/storage/v1/object/public/images/${data.path}`;
+  return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${data.path}`;
 };
 
 export default upload;

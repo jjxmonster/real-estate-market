@@ -13,8 +13,16 @@ export type ApartmentOffer = {
   image_url: string;
 };
 
+// helpers
 export type ApartmentCategory = "rent" | "sale" | null;
 
+export enum NotificatonType {
+  DANGER,
+  INFORMATION,
+  SUCCESS,
+}
+
+// payloads
 export type OfferPayload = {
   title: string;
   location: string;
@@ -24,11 +32,11 @@ export type OfferPayload = {
   category: "rent" | "sale";
   image_url: string;
 };
-export enum NotificatonType {
-  DANGER,
-  INFORMATION,
-  SUCCESS,
-}
+export type UserPayload = {
+  email: string;
+  name: string;
+  password: string;
+};
 
 // atoms
 export interface NotificationStateType {
