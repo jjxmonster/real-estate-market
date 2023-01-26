@@ -48,7 +48,7 @@ export interface LoadingStateType {
   isLoading: boolean;
   message: string;
 }
-export type OfferFormStateType = {
+export type OfferFormType = {
   title: string;
   location: string;
   price: number;
@@ -56,4 +56,10 @@ export type OfferFormStateType = {
   area: number;
   category: ApartmentCategory;
   image_url: FileList | null;
+};
+export type RegisterFormType = {
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
 };

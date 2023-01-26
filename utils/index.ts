@@ -83,3 +83,35 @@ export const offerFormFields: Array<{
     type: "file",
   },
 ];
+
+export const registerFormFields: Array<{
+  key: "name" | "email" | "password" | "password_confirmation";
+  label: string;
+  type: string;
+  placeholder: string;
+}> = [
+  {
+    key: "name",
+    label: "Name",
+    type: "text",
+    placeholder: "John",
+  },
+  {
+    key: "email",
+    label: "E-mail",
+    type: "text",
+    placeholder: "john@example.com",
+  },
+  {
+    key: "password",
+    label: "Password",
+    type: "password",
+    placeholder: "Must have at least 6 characters",
+  },
+  {
+    key: "password_confirmation",
+    label: "Password Confirmation",
+    type: "password",
+    placeholder: "Confirm your password",
+  },
+];

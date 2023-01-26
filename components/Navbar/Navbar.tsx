@@ -29,7 +29,7 @@ const Navbar: FunctionComponent = () => {
           HOME<span className="text-yellow">4</span>U
         </span>
       </h1>
-      <Button label="Register" onClick={() => {}} />
+      <Button label="Register" onClick={() => push("/user/register")} />
     </nav>
   );
 };

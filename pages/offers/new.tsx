@@ -1,20 +1,16 @@
 import React, { FunctionComponent } from "react";
 import { useRouter } from "next/router";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import {
-  loadingState,
-  notificationState,
-  offerFormState,
-} from "../../atoms/atoms";
+import { loadingState, notificationState } from "../../atoms/atoms";
 import { URL, categoryDropdownItems, offerFormFields } from "../../utils";
 import {
   ApartmentCategory,
   NotificatonType,
-  OfferFormStateType,
+  OfferFormType,
 } from "../../types/common";
 import uploadimage from "../../services/offers/upload";
 
@@ -44,8 +40,6 @@ const schema = yup
   .required();
 
 const NewOffer: FunctionComponent = () => {
-  const [{ title, category, location, description, price, area }] =
-    useRecoilState(offerFormState);
   const setLoadingState = useSetRecoilState(loadingState);
   const setNotificationState = useSetRecoilState(notificationState);
 
@@ -57,16 +51,8 @@ const NewOffer: FunctionComponent = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<OfferFormStateType>({
+  } = useForm<OfferFormType>({
     resolver: yupResolver(schema),
-    defaultValues: {
-      title,
-      category,
-      location,
-      description,
-      price,
-      area,
-    },
   });
 
   const onSubmit = handleSubmit(async payload => {

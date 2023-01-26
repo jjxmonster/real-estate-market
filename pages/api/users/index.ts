@@ -11,8 +11,8 @@ const usersApi = async (req: NextApiRequest, res: NextApiResponse) => {
         const user = await creteaUser(payload);
 
         res.status(200).json({ status: "created", user });
-      } catch (err) {
-        res.status(422).json({ status: "not_created", err });
+      } catch (err: any) {
+        res.status(422).json({ status: "not_created", error: err.message });
       }
     }
     default:

@@ -10,8 +10,19 @@ const schema = Joi.object({
   password: Joi.string().required(),
 });
 
+const checkEmail = async (email: string) => {
+  const existingUser = await airDB("users")
+    .select({ filterByFormula: `email="${email}"` })
+    .firstPage();
+
+  if (existingUser && existingUser[0]) {
+    throw new Error("email_taken");
+  }
+};
+
 const create = async (payload: UserPayload) => {
   const { email, name, password } = await schema.validateAsync(payload);
+  await checkEmail(email);
   const passwordSalt = crypto.randomBytes(16).toString("hex");
   const passwordHash = crypto
     .pbkdf2Sync(password, passwordSalt, 1000, 64, "sha512")
