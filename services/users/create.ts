@@ -3,6 +3,7 @@ import Joi from "joi";
 import crypto from "crypto";
 
 import { UserPayload } from "types/common";
+import { getHashedPassword } from "utils";
 
 const schema = Joi.object({
   email: Joi.string().email().required(),
@@ -24,9 +25,7 @@ const create = async (payload: UserPayload) => {
   const { email, name, password } = await schema.validateAsync(payload);
   await checkEmail(email);
   const passwordSalt = crypto.randomBytes(16).toString("hex");
-  const passwordHash = crypto
-    .pbkdf2Sync(password, passwordSalt, 1000, 64, "sha512")
-    .toString("hex");
+  const passwordHash = getHashedPassword(password, passwordSalt);
 
   const user = await airDB("users").create([
     {

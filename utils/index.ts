@@ -1,3 +1,5 @@
+import crypto from "crypto";
+
 import { ApartmentCategory } from "../types/common";
 
 export const jsonFetcher = (url: string) => fetch(url).then(res => res.json());
@@ -115,3 +117,6 @@ export const registerFormFields: Array<{
     placeholder: "Confirm your password",
   },
 ];
+
+export const getHashedPassword = (password: string, salt: string) =>
+  crypto.pbkdf2Sync(password, salt, 1000, 64, "sha512").toString("hex");
