@@ -1,9 +1,8 @@
-import NextAuth, { User } from "next-auth";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import authorizeUser from "services/users/authorize";
 
 import type { JWT } from "next-auth/jwt";
-import type { Session } from "next-auth";
 import { AuthSession, UserAuth } from "types/common";
 
 export default NextAuth({
@@ -15,9 +14,14 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        const { email, password } = credentials as {
+          email: string;
+          password: string;
+        };
+
         const user = await authorizeUser({
-          email: credentials?.email,
-          password: credentials?.password,
+          email,
+          password,
         });
 
         if (user) {

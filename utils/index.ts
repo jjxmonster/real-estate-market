@@ -118,5 +118,25 @@ export const registerFormFields: Array<{
   },
 ];
 
+export const loginrormFields: Array<{
+  key: "email" | "password";
+  label: string;
+  type: string;
+  placeholder: string;
+}> = [
+  {
+    key: "email",
+    label: "E-mail",
+    type: "text",
+    placeholder: "john@example.com",
+  },
+  {
+    key: "password",
+    label: "Password",
+    type: "password",
+    placeholder: "strongpassword123",
+  },
+];
+
 export const getHashedPassword = (password: string, salt: string) =>
   crypto.pbkdf2Sync(password, salt, 1000, 64, "sha512").toString("hex");

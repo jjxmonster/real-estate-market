@@ -4,10 +4,11 @@ import { useRouter } from "next/router";
 
 import Button from "../Button/Button";
 import { URL } from "../../utils";
+import { useSession } from "next-auth/react";
 
 const LandingContainer: FunctionComponent = () => {
   const { push } = useRouter();
-
+  const session = useSession();
   return (
     <section className="pt-52 h-screen relative">
       <h2 className="text-white z-50 mb-12 w-3/5 font-bold text-7xl">
