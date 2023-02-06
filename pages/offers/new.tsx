@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSetRecoilState } from "recoil";
 import { Controller, useForm } from "react-hook-form";
@@ -20,6 +20,7 @@ import PageHeader from "../../components/PageHeader/PageHeader";
 import UploadButton from "../../components/UploadButton/UploadButton";
 import Button from "../../components/Button/Button";
 import Head from "next/head";
+import { useSession } from "next-auth/react";
 
 const schema = yup
   .object({
@@ -42,6 +43,7 @@ const schema = yup
 const NewOffer: FunctionComponent = () => {
   const setLoadingState = useSetRecoilState(loadingState);
   const setNotificationState = useSetRecoilState(notificationState);
+  const { status } = useSession();
 
   const { push } = useRouter();
 
@@ -136,6 +138,28 @@ const NewOffer: FunctionComponent = () => {
       );
     }
   );
+
+  useEffect(() => {
+    setLoadingState({ isLoading: false, message: "" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (status === "loading") {
+    setLoadingState({ isLoading: true, message: "Loading..." });
+    return null;
+  }
+
+  if (status === "unauthenticated") {
+    setLoadingState({ isLoading: true, message: "Redirecting..." });
+
+    setTimeout(() => {
+      setLoadingState({ isLoading: false, message: "" });
+
+      push(URL.HOME_PAGE);
+    }, 1000);
+
+    return null;
+  }
 
   return (
     <>

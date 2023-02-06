@@ -29,6 +29,7 @@ const authorize = async (payload: Omit<UserPayload, "name">) => {
     return null;
   }
   return {
+    id: user.id,
     email: user.fields.email,
     name: user.fields.name,
     role: user.fields.role,

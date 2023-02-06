@@ -3,11 +3,12 @@ import { useRouter } from "next/router";
 
 import Button from "../Button/Button";
 import { URL } from "../../utils";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 const Navbar: FunctionComponent = () => {
   const { push } = useRouter();
-  const session = useSession();
+  const { status, data } = useSession();
+
   return (
     <nav className="w-full py-10 flex items-center cursor-pointer justify-between">
       <h1
@@ -32,10 +33,10 @@ const Navbar: FunctionComponent = () => {
         </span>
       </h1>
       <div className="flex items-center gap-4">
-        {session.status === "authenticated" ? (
+        {status === "authenticated" ? (
           <>
-            <p className="text-white text-xl">{session.data.user?.name}</p>
-            <Button label="Logout" onClick={() => push("/")} />
+            <p className="text-white text-xl">{data.user?.name}</p>
+            <Button label="Logout" onClick={() => signOut()} />
           </>
         ) : (
           <>
