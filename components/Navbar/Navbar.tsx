@@ -3,9 +3,11 @@ import { useRouter } from "next/router";
 
 import Button from "../Button/Button";
 import { URL } from "../../utils";
+import { useSession } from "next-auth/react";
 
 const Navbar: FunctionComponent = () => {
   const { push } = useRouter();
+  const session = useSession();
   return (
     <nav className="w-full py-10 flex items-center cursor-pointer justify-between">
       <h1
@@ -29,7 +31,23 @@ const Navbar: FunctionComponent = () => {
           HOME<span className="text-yellow">4</span>U
         </span>
       </h1>
-      <Button label="Register" onClick={() => push("/user/register")} />
+      <div className="flex items-center gap-4">
+        {session.status === "authenticated" ? (
+          <>
+            <p className="text-white text-xl">{session.data.user?.name}</p>
+            <Button label="Logout" onClick={() => push("/")} />
+          </>
+        ) : (
+          <>
+            <Button label="Register" onClick={() => push(URL.REGISTER_PAGE)} />
+            <Button
+              label="Sign In"
+              onClick={() => push(URL.LOGIN_PAGE)}
+              type="secondary"
+            />
+          </>
+        )}
+      </div>
     </nav>
   );
 };

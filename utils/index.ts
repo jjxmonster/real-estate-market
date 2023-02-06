@@ -14,6 +14,8 @@ export const URL = {
   OFFER_PAGE: "/offers/",
   THANKS_PAGE: "/offers/thanks",
   NEW_OFFER_PAGE: "/offers/new",
+  REGISTER_PAGE: "/user/register",
+  LOGIN_PAGE: "/user/signin",
 };
 
 export const formatCurrency = new Intl.NumberFormat("en-US", {
