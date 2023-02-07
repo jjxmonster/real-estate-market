@@ -1,5 +1,3 @@
-import type { User, Session } from "next-auth";
-
 export type ApartmentOffer = {
   area: number;
   category: string;
@@ -65,11 +63,3 @@ export type RegisterFormType = {
   password: string;
   password_confirmation: string;
 };
-
-export interface UserAuth extends User {
-  role: string;
-}
-
-export interface AuthSession extends Session {
-  user: UserAuth;
-}
