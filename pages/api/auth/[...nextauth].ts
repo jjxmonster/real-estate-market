@@ -44,6 +44,7 @@ export default NextAuth({
         token.role = user?.role;
         token.id = user?.id;
       }
+
       return token;
     },
   },

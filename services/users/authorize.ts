@@ -3,13 +3,16 @@ import Joi from "joi";
 
 import { UserPayload } from "types/common";
 import { getHashedPassword } from "utils";
+import { User } from "next-auth";
 
 const schema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().required(),
 });
 
-const authorize = async (payload: Omit<UserPayload, "name">) => {
+const authorize = async (
+  payload: Omit<UserPayload, "name">
+): Promise<User | null> => {
   const { email, password } = await schema.validateAsync(payload);
 
   const [user] = await airDB("users")
@@ -30,9 +33,9 @@ const authorize = async (payload: Omit<UserPayload, "name">) => {
   }
   return {
     id: user.id,
-    email: user.fields.email,
-    name: user.fields.name,
-    role: user.fields.role,
+    email: user.fields.email as string,
+    name: user.fields.name as string,
+    role: user.fields.role as string,
   };
 };
 

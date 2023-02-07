@@ -15,7 +15,7 @@ const offersApi = async (req: NextApiRequest, res: NextApiResponse) => {
     case "POST": {
       try {
         const session = await getSession({ req });
-        console.log(req);
+
         if (!session) {
           return res.status(401).json({ error: "not_authorized" });
         }
