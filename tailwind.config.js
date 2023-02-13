@@ -10,6 +10,7 @@ module.exports = {
         danger: "#d32f2f",
         information: "#0288d1",
         success: "#388E3C",
+        black: "#161616",
       },
       minHeight: {
         section: "calc(100vh - 216px)",

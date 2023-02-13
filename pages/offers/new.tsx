@@ -14,7 +14,7 @@ import {
 } from "../../types/common";
 import uploadimage from "../../services/offers/upload";
 
-import Dropdown from "../../components/Dropdown/Dropdown";
+import Selector from "../../components/Selector/Selector";
 import InputComponent from "../../components/InputComponent/InputComponent";
 import PageHeader from "../../components/PageHeader/PageHeader";
 import UploadButton from "../../components/UploadButton/UploadButton";
@@ -111,7 +111,7 @@ const NewOffer: FunctionComponent = () => {
             render={({ field }) => {
               const { value, onChange } = field;
               return (
-                <Dropdown
+                <Selector
                   error={errors[key]}
                   label={label}
                   items={categoryDropdownItems}

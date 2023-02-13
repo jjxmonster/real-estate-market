@@ -2,82 +2,52 @@ import React, { useState } from "react";
 import { FieldError } from "react-hook-form";
 
 import { ArrowDownIcon } from "../Icons/Icons";
-import { capitalizeFirstLetter } from "../../utils";
+import { useRouter } from "next/router";
 
-type ItemValue = string | null;
-
-type Item<T extends ItemValue> = {
-  value: T;
+interface DropdownProps {
   label: string;
-};
-
-interface DropdownProps<T extends ItemValue> {
-  label: string;
-  items: Item<T>[];
-  value: T;
-  onChange: (value: T) => void;
-  error: FieldError | undefined;
+  items: Array<{ label: string; path: string }>;
 }
 
-function Dropdown<T extends ItemValue>({
-  label,
-  items,
-  value,
-  onChange,
-  error,
-}: DropdownProps<T>) {
+function Dropdown({ label, items }: DropdownProps) {
   const [showItems, setShowItems] = useState(false);
+  const { push } = useRouter();
 
-  const renderDropdownItems = items.map(item => (
+  const renderDropdownItems = items.map(({ label, path }) => (
     <li
-      key={item.value}
+      key={label}
       onClick={() => {
         setShowItems(false);
-        onChange(item.value);
+        push(path);
       }}
     >
-      <span className="block cursor-pointer py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-        {item.label}
+      <span className="block cursor-pointer bg-black text-white py-3 px-5 hover:text-yellow">
+        {label}
       </span>
     </li>
   ));
 
-  const displaySelectedValue = value
-    ? items.find(item => item.value === value)?.label
-    : `Choose ${label}`;
-
   return (
     <div>
-      <label className="text-white font-medium text-xl">{label}</label>
+      <label
+        onClick={() => setShowItems(prevState => !prevState)}
+        className="cursor-pointer text-white font-medium text-xl flex items-center"
+      >
+        {label}
+        {<ArrowDownIcon />}
+      </label>
       <div>
-        <button
-          onClick={() => setShowItems(prevState => !prevState)}
-          className="text-gray-dark my-2 bg-yellow font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
-          type="button"
-        >
-          {displaySelectedValue}
-          {<ArrowDownIcon />}
-        </button>
-
         <div
-          id="dropdown"
+          id="selector"
           className={`${
             showItems ? "opacity-1" : "opacity-0"
-          } z-10 w-44 bg-white absolute rounded divide-y transition divide-gray-100 shadow dark:bg-gray-700`}
+          } z-10 w-44  absolute rounded divide-y transition divide-gray-100 shadow-xl bg-black`}
         >
-          <ul
-            className="py-1 text-sm text-gray-700 dark:text-gray-200"
-            aria-labelledby="dropdownDefault"
-          >
+          <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
             {renderDropdownItems}
           </ul>
         </div>
       </div>
-      {error?.message && (
-        <p className="text-red font-medium">
-          {capitalizeFirstLetter(error.message)}
-        </p>
-      )}
     </div>
   );
 }

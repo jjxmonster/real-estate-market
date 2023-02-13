@@ -16,6 +16,7 @@ export const URL = {
   NEW_OFFER_PAGE: "/offers/new",
   REGISTER_PAGE: "/user/register",
   LOGIN_PAGE: "/user/signin",
+  MY_OFFERS_PAGE: "/offers/my",
 };
 
 export const formatCurrency = new Intl.NumberFormat("en-US", {
@@ -138,6 +139,10 @@ export const loginrormFields: Array<{
     type: "password",
     placeholder: "strongpassword123",
   },
+];
+
+export const userDropdownItems = [
+  { label: "My offers", path: URL.MY_OFFERS_PAGE },
 ];
 
 export const getHashedPassword = (password: string, salt: string) =>

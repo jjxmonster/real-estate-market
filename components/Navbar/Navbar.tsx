@@ -2,8 +2,9 @@ import React, { FunctionComponent } from "react";
 import { useRouter } from "next/router";
 
 import Button from "../Button/Button";
-import { URL } from "../../utils";
+import { URL, userDropdownItems } from "../../utils";
 import { signOut, useSession } from "next-auth/react";
+import Dropdown from "components/Dropdown/Dropdown";
 
 const Navbar: FunctionComponent = () => {
   const { push } = useRouter();
@@ -35,7 +36,7 @@ const Navbar: FunctionComponent = () => {
       <div className="flex items-center gap-4">
         {status === "authenticated" ? (
           <>
-            <p className="text-white text-xl">{data.user?.name}</p>
+            <Dropdown label={data.user?.name ?? ""} items={userDropdownItems} />
             <Button label="Logout" onClick={() => signOut()} />
           </>
         ) : (

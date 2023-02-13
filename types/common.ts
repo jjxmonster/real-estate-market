@@ -11,6 +11,7 @@ export type ApartmentOffer = {
   title: string;
   updated_at: string;
   image_url: string;
+  email?: string;
 };
 
 // helpers
