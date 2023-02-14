@@ -30,17 +30,17 @@ const ApartmentCard: FunctionComponent<ApartmentCardProps> = ({
   return (
     <div
       onClick={() => push(`${URL.OFFER_PAGE}${id}`)}
-      className="max-w-sm rounded-md shadow-xl border-gray-700 border bg-gray-dark	overflow-hidden shadow-lg cursor-pointer relative after:absolute after:invisible after:top-0 after:left-0 after:border-yellow after:border-l-2 after:border-t-2 after:w-0 after:h-0 after:ease after:transition-all	 hover:after:h-full hover:after:w-full hover:after:visible before:absolute before:invisible before:bottom-0 before:right-0 before:border-yellow before:border-b-2 before:border-r-2 before:w-0 before:h-0 before:ease before:transition-all	 hover:before:h-full hover:before:w-full hover:before:visible after:duration-300 before:duration-300"
+      className="max-w-sm rounded-md shadow-xl border-gray-700 border bg-gray-dark mb-10 overflow-hidden shadow-lg cursor-pointer relative after:absolute after:invisible after:top-0 after:left-0 after:border-yellow after:border-l-2 after:border-t-2 after:w-0 after:h-0 after:ease after:transition-all	 hover:after:h-full hover:after:w-full hover:after:visible before:absolute before:invisible before:bottom-0 before:right-0 before:border-yellow before:border-b-2 before:border-r-2 before:w-0 before:h-0 before:ease before:transition-all	 hover:before:h-full hover:before:w-full hover:before:visible after:duration-300 before:duration-300"
     >
-      <div className="p-4 rounded-md overflow-hidden">
+      <div className="p-4 rounded-xl w-full h-56 overflow-hidden mb-5">
         <Image
           className="rounded-md"
-          width={500}
-          height={500}
+          width={1000}
+          height={1000}
           placeholder="blur"
           blurDataURL={`${image_url}?auto=format,compress&q=1&blur=500&w=2`}
           src={image_url}
-          alt="Sunset in the mountains"
+          alt={`${title} image`}
         />
       </div>
       <p className="px-6 text-yellow text-xl font-extrabold">

@@ -143,6 +143,7 @@ export const loginrormFields: Array<{
 
 export const userDropdownItems = [
   { label: "My offers", path: URL.MY_OFFERS_PAGE },
+  { label: "Create new offer", path: URL.NEW_OFFER_PAGE },
 ];
 
 export const getHashedPassword = (password: string, salt: string) =>
