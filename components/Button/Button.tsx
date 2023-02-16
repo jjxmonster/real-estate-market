@@ -28,7 +28,7 @@ const Button: FunctionComponent<ButtonProps> = ({
           type === "secondary"
             ? "text-gray-dark group-hover:text-yellow "
             : "text-yellow group-hover:text-gray-dark "
-        } transition duration-300 ease`}
+        } transition duration-300 ease text-m`}
       >
         {label}
       </span>

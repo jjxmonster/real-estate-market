@@ -1,14 +1,13 @@
 import React, { FunctionComponent } from "react";
-import useSWR from "swr";
 
-import getRecentOffers from "../../services/offers/getRecent";
-import { jsonFetcher } from "../../utils";
-
-import { ApartmentOffer } from "../../types/common";
 import ApartmentCard from "../../components/ApartmentCard/ApartmentCard";
-import PageHeader from "../../components/PageHeader/PageHeader";
+import { ApartmentOffer } from "../../types/common";
 import { GetStaticProps } from "next";
 import Head from "next/head";
+import PageHeader from "../../components/PageHeader/PageHeader";
+import getRecentOffers from "../../services/offers/getRecent";
+import { jsonFetcher } from "../../utils";
+import useSWR from "swr";
 
 interface OffersProps {
   offers: Array<ApartmentOffer>;
@@ -59,7 +58,7 @@ const Offers: FunctionComponent<OffersProps> = ({ offers }) => {
 export default Offers;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const offers = await getRecentOffers(3);
+  const offers = await getRecentOffers(6);
 
   return {
     props: {
