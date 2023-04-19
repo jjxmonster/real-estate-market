@@ -1,12 +1,10 @@
 import { ApartmentCategory } from "types/common";
 
 const paginate = async (offset: string, category: ApartmentCategory) => {
-  let apiURL = `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/offers?maxRecords=6&view=Grid%20view"`;
+  let apiURL = `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE}/offers?pageSize=3&view=Grid%20view`;
 
   if (offset) {
-    apiURL +=
-      `&offset=${offset}` +
-      encodeURI(`filterByFormula=(category="${category}")`);
+    apiURL += `&offset=${offset}`;
   }
 
   const response = await fetch(apiURL, {
