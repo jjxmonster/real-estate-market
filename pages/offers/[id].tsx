@@ -1,22 +1,21 @@
-import React, { FunctionComponent } from "react";
-import { useSetRecoilState } from "recoil";
-import { GetStaticPaths, GetStaticPropsContext } from "next";
-import { useRouter } from "next/router";
-import Image from "next/image";
-
-import { ApartmentOffer } from "../../types/common";
-
-import getRecentOffers from "../../services/offers/getRecent";
-import getOffers from "../../services/offers/get";
-import { loadingState } from "../../atoms/atoms";
 import {
   ActiveStatusIcon,
   AreaIcon,
   BackIcon,
   CategoryIcon,
 } from "../../components/Icons/Icons";
+import { GetStaticPaths, GetStaticPropsContext } from "next";
+import React, { FunctionComponent } from "react";
 import { URL, capitalizeFirstLetter } from "../../utils";
+
+import { ApartmentOffer } from "../../types/common";
 import Head from "next/head";
+import Image from "next/image";
+import getOffers from "../../services/offers/get";
+import getRecentOffers from "../../services/offers/getRecent";
+import { loadingState } from "../../atoms/atoms";
+import { useRouter } from "next/router";
+import { useSetRecoilState } from "recoil";
 
 interface OfferPageProps {
   offer: ApartmentOffer;
@@ -67,7 +66,7 @@ const OfferPage: FunctionComponent<OfferPageProps> = ({ offer }) => {
             height={1000}
             alt="Apartment Image"
           />
-          <div className="flex-1 rounded-xl border-4 border-yellow border flex flex-col">
+          <div className="flex-1 rounded-xl border-yellow border flex flex-col">
             <div className="flex justify-between flex-col items-center flex-1 py-14">
               <span className="text-gray-500 text-xl mb-3">Area</span>
               <span className="text-white text-xl flex gap-1">
