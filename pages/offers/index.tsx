@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 
 import ApartmentCard from "../../components/ApartmentCard/ApartmentCard";
 import { ApartmentOffer } from "../../types/common";
@@ -9,7 +9,7 @@ import PageHeader from "../../components/PageHeader/PageHeader";
 import { jsonFetcher } from "../../utils";
 import { loadingState } from "atoms/atoms";
 import paginateOffers from "services/offers/paginate";
-import useSWR from "swr";
+import { useRouter } from "next/router";
 import { useSetRecoilState } from "recoil";
 
 interface OffersProps {
@@ -21,6 +21,8 @@ const Offers: FunctionComponent<OffersProps> = ({ offers, offset }) => {
   const [currentOffers, setCurrentOffers] = useState(offers);
   const [currentOffset, setCurrentOffset] = useState(offset);
   const setLoadingState = useSetRecoilState(loadingState);
+
+  const { query } = useRouter();
 
   const renderApartments = currentOffers.map(
     ({
@@ -57,6 +59,20 @@ const Offers: FunctionComponent<OffersProps> = ({ offers, offset }) => {
       }
     );
   };
+  const handleFilters = async () => {
+    let filters = "";
+    if (query.category) {
+      filters += `?category=${query.category}`;
+    }
+    const response = await jsonFetcher(`/api/offers/paginate${filters}`);
+    setCurrentOffset(response.offset);
+    setCurrentOffers([...response.offers]);
+  };
+
+  useEffect(() => {
+    handleFilters();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
 
   return (
     <>
@@ -65,9 +81,12 @@ const Offers: FunctionComponent<OffersProps> = ({ offers, offset }) => {
       </Head>
       <div>
         <PageHeader
-          title="Search properties"
-          description="Find your dream property for buy or rent."
+          title={`Search properties ${
+            query?.category ? `to ${query.category}` : ""
+          }`}
+          description=""
         />
+        <div></div>
         <div className="grid gap-2 grid-cols-3">{renderApartments}</div>
         <div className="flex justify-center">
           <Button label="Load more" onClick={handleLoadMore} />

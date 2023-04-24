@@ -1,26 +1,26 @@
-import React, { FunctionComponent, useEffect } from "react";
-import { useRouter } from "next/router";
-import { useSetRecoilState } from "recoil";
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { loadingState, notificationState } from "../../atoms/atoms";
-import { URL, categoryDropdownItems, offerFormFields } from "../../utils";
 import {
   ApartmentCategory,
   NotificatonType,
   OfferFormType,
 } from "../../types/common";
-import uploadimage from "../../services/offers/upload";
+import { Controller, useForm } from "react-hook-form";
+import React, { FunctionComponent, useEffect } from "react";
+import { URL, categoryDropdownItems, offerFormFields } from "../../utils";
+import { loadingState, notificationState } from "../../atoms/atoms";
 
-import Selector from "../../components/Selector/Selector";
-import InputComponent from "../../components/InputComponent/InputComponent";
-import PageHeader from "../../components/PageHeader/PageHeader";
-import UploadButton from "../../components/UploadButton/UploadButton";
 import Button from "../../components/Button/Button";
 import Head from "next/head";
+import InputComponent from "../../components/InputComponent/InputComponent";
+import PageHeader from "../../components/PageHeader/PageHeader";
+import Selector from "../../components/Selector/Selector";
+import UploadButton from "../../components/UploadButton/UploadButton";
+import uploadimage from "../../services/offers/upload";
+import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import { useSetRecoilState } from "recoil";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const schema = yup
   .object({

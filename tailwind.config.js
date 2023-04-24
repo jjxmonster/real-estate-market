@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         "gray-dark": "#1d1d1d",
         yellow: "#fec303",
+        yellow_opacity: "rgba(254, 195, 3, 0.2)",
         red: "rgb(255,0,0)",
         danger: "#d32f2f",
         information: "#0288d1",

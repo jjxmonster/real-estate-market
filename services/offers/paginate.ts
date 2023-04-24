@@ -7,6 +7,10 @@ const paginate = async (offset?: string, category?: ApartmentCategory) => {
     apiURL += `&offset=${offset}`;
   }
 
+  if (category) {
+    apiURL += "&" + encodeURI(`filterByFormula=(category="${category}")`);
+  }
+
   const response = await fetch(apiURL, {
     headers: {
       Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
