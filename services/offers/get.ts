@@ -1,12 +1,16 @@
+import { ApartmentOffer } from "types/common";
 import airDB from "../airtableClient";
 
-const get = async (id?: string) => {
+const get = async (id?: string): Promise<ApartmentOffer | undefined> => {
   const offers = await airDB("offers")
     .select({ filterByFormula: `id=${id}` })
     .firstPage();
 
   if (offers && offers[0]) {
-    return offers[0].fields;
+    return {
+      airtableID: offers[0].id,
+      ...(offers[0].fields as ApartmentOffer),
+    };
   }
 };
 

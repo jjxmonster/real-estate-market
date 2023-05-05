@@ -1,6 +1,7 @@
+import { ApartmentOffer, OfferPayload } from "types/common";
+
 import Joi from "joi";
-import { OfferPayload } from "../../types/common";
-import airDB from "../airtableClient";
+import airDB from "services/airtableClient";
 
 const schema = Joi.object({
   title: Joi.string().required(),
@@ -13,19 +14,16 @@ const schema = Joi.object({
   contact: Joi.string().required(),
 });
 
-const create = async (payload: OfferPayload, userId: string) => {
+const updateOffer = async (id: string, payload: OfferPayload) => {
   const validateOffer = await schema.validateAsync(payload);
-  const offer = await airDB("offers").create([
+  const offer = await airDB("offers").update([
     {
-      fields: {
-        ...validateOffer,
-        users: [userId],
-        status: "inactive",
-      },
+      id,
+      fields: { ...validateOffer },
     },
   ]);
 
-  return offer;
+  return offer[0] as unknown as ApartmentOffer;
 };
 
-export default create;
+export default updateOffer;

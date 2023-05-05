@@ -12,6 +12,8 @@ export type ApartmentOffer = {
   updated_at: string;
   image_url: string;
   email?: string;
+  users: Array<string>;
+  airtableID?: string;
 };
 
 // helpers
@@ -57,6 +59,7 @@ export type OfferFormType = {
   area: number;
   category: ApartmentCategory;
   image_url: FileList | null;
+  contact: number;
 };
 export type RegisterFormType = {
   name: string;

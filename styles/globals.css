@@ -5,6 +5,19 @@ body {
   overflow-x: hidden;
   font-family: "Sora", sans-serif;
 }
+.offer-page-image-containter {
+  width: 100%;
+}
+.offer-image {
+  object-fit: contain;
+  width: 100% !important;
+  position: relative !important;
+  height: unset !important;
+}
+.offer-page-image-containter div {
+  position: unset !important;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

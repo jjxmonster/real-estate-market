@@ -1,6 +1,5 @@
-import crypto from "crypto";
-
 import { ApartmentCategory } from "../types/common";
+import crypto from "crypto";
 
 export const jsonFetcher = (url: string) => fetch(url).then(res => res.json());
 
@@ -40,7 +39,8 @@ export const offerFormFields: Array<{
     | "description"
     | "price"
     | "area"
-    | "image_url";
+    | "image_url"
+    | "contact";
   label: string;
   type: string;
   placeholder: string;
@@ -74,6 +74,12 @@ export const offerFormFields: Array<{
     label: "Description",
     type: "area",
     placeholder: "Tell us something more about property that you offer",
+  },
+  {
+    key: "contact",
+    label: "Phone Number",
+    type: "number",
+    placeholder: "Provide your phone number in order to contact",
   },
   {
     key: "area",

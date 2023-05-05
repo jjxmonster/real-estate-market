@@ -15,6 +15,7 @@ module.exports = {
       },
       minHeight: {
         section: "calc(100vh - 216px)",
+        20: "120px",
       },
       fontSize: {
         xs: "0.75rem",
