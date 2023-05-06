@@ -14,6 +14,7 @@ import Head from "next/head";
 import Image from "next/image";
 import getOffers from "../../services/offers/get";
 import getRecentOffers from "../../services/offers/getRecent";
+import isAuthorized from "services/offers/isAuthorized";
 import { loadingState } from "../../atoms/atoms";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
@@ -26,23 +27,16 @@ type PageParams = {
   id: string;
 };
 interface EditOfferButton {
-  user_id: string | null | undefined;
-  offer_creator: string;
+  offerID: number;
 }
 
-const EditOfferButton: FunctionComponent<EditOfferButton> = ({
-  user_id,
-  offer_creator,
-}) => {
-  if (!user_id || !(offer_creator === user_id)) {
-    return null;
-  }
-
-  const handleEditOffer = () => {
-    console.log(user_id);
+const EditOfferButton: FunctionComponent<EditOfferButton> = ({ offerID }) => {
+  const { push } = useRouter();
+  const handleMoveToEditor = () => {
+    push(`/offers/${offerID}/edit`);
   };
 
-  return <Button label="Edit Offer" onClick={handleEditOffer} />;
+  return <Button label="Edit Offer" onClick={handleMoveToEditor} />;
 };
 
 const OfferPage: FunctionComponent<OfferPageProps> = ({ offer }) => {
@@ -81,7 +75,7 @@ const OfferPage: FunctionComponent<OfferPageProps> = ({ offer }) => {
         </span>
         <div className="flex justify-between w-full">
           <h2 className="text-4xl font-medium text-white">{title}</h2>
-          <EditOfferButton user_id={data?.user.id} offer_creator={users[0]} />
+          {isAuthorized(offer, data) && <EditOfferButton offerID={offer.id} />}
         </div>
         <p className="text-gray-500 mt-5 mb-16 text-xl">{location}</p>
         <div className="flex w-full">

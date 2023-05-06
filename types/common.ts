@@ -67,3 +67,13 @@ export type RegisterFormType = {
   password: string;
   password_confirmation: string;
 };
+
+export type OfferFormKeysType =
+  | "title"
+  | "category"
+  | "location"
+  | "description"
+  | "price"
+  | "area"
+  | "image_url"
+  | "contact";

@@ -1,4 +1,5 @@
-import { ApartmentCategory } from "../types/common";
+import { ApartmentCategory, OfferFormKeysType } from "../types/common";
+
 import crypto from "crypto";
 
 export const jsonFetcher = (url: string) => fetch(url).then(res => res.json());
@@ -32,15 +33,7 @@ export const categoryDropdownItems: Array<{
 ];
 
 export const offerFormFields: Array<{
-  key:
-    | "title"
-    | "category"
-    | "location"
-    | "description"
-    | "price"
-    | "area"
-    | "image_url"
-    | "contact";
+  key: OfferFormKeysType;
   label: string;
   type: string;
   placeholder: string;
@@ -79,7 +72,7 @@ export const offerFormFields: Array<{
     key: "contact",
     label: "Phone Number",
     type: "number",
-    placeholder: "Provide your phone number in order to contact",
+    placeholder: "Provide your phone number for users interested in your offer",
   },
   {
     key: "area",

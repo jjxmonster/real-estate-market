@@ -4,12 +4,12 @@ import {
   ApartmentCategory,
   ApartmentOffer,
   NotificatonType,
+  OfferFormKeysType,
   OfferFormType,
 } from "../../../types/common";
 import { Controller, useForm } from "react-hook-form";
 import React, { FunctionComponent, useEffect } from "react";
 import { URL, categoryDropdownItems, offerFormFields } from "../../../utils";
-import { getSession, useSession } from "next-auth/react";
 import { loadingState, notificationState } from "../../../atoms/atoms";
 
 import Button from "../../../components/Button/Button";
@@ -18,8 +18,8 @@ import Head from "next/head";
 import InputComponent from "../../../components/InputComponent/InputComponent";
 import PageHeader from "../../../components/PageHeader/PageHeader";
 import Selector from "../../../components/Selector/Selector";
-import UploadButton from "../../../components/UploadButton/UploadButton";
 import getOfferByID from "services/offers/get";
+import { getSession } from "next-auth/react";
 import isAuthorized from "services/offers/isAuthorized";
 import uploadimage from "../../../services/offers/upload";
 import { useRouter } from "next/router";
@@ -54,7 +54,7 @@ const OfferEditPageProps: FunctionComponent<OfferEditPageProps> = ({
 }) => {
   const setLoadingState = useSetRecoilState(loadingState);
   const setNotificationState = useSetRecoilState(notificationState);
-  const { status } = useSession();
+  console.log(offer);
 
   const { push } = useRouter();
 
@@ -63,6 +63,7 @@ const OfferEditPageProps: FunctionComponent<OfferEditPageProps> = ({
     watch,
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<OfferFormType>({
     resolver: yupResolver(schema),
@@ -103,15 +104,7 @@ const OfferEditPageProps: FunctionComponent<OfferEditPageProps> = ({
   const renderFields = offerFormFields.map(
     ({ key, label, placeholder, type }) => {
       if (type === "file" && key === "image_url") {
-        return (
-          <UploadButton
-            error={errors[key]}
-            value={watch("image_url")}
-            key={key}
-            label="image"
-            register={register("image_url")}
-          />
-        );
+        return null;
       }
       if (type === "dropdown" && key === "category") {
         return (
@@ -149,6 +142,16 @@ const OfferEditPageProps: FunctionComponent<OfferEditPageProps> = ({
       );
     }
   );
+
+  useEffect(() => {
+    Object.entries(offer).forEach(([key, value]) => {
+      setValue(
+        key as OfferFormKeysType,
+        value as string | number | FileList | null
+      );
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
