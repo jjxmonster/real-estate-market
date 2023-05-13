@@ -11,11 +11,12 @@ const schema = Joi.object({
   area: Joi.number().greater(10).required(),
   category: Joi.string().valid("rent", "sale").required(),
   image_url: Joi.string().required(),
-  contact: Joi.string().required(),
+  mobile: Joi.string().required(),
 });
 
 const updateOffer = async (id: string, payload: OfferPayload) => {
   const validateOffer = await schema.validateAsync(payload);
+
   const offer = await airDB("offers").update([
     {
       id,

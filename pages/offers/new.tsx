@@ -30,7 +30,7 @@ const schema = yup
     category: yup.string().typeError("Category is a required field"),
     description: yup.string().required().min(10),
     area: yup.number().required().min(10),
-    contact: yup.number().required().min(9).max(9),
+    mobile: yup.number().required().min(9).max(9),
     image_url: yup
       .mixed()
       .test(

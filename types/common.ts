@@ -59,7 +59,7 @@ export type OfferFormType = {
   area: number;
   category: ApartmentCategory;
   image_url: FileList | null;
-  contact: number;
+  mobile: number;
 };
 export type RegisterFormType = {
   name: string;
@@ -76,4 +76,4 @@ export type OfferFormKeysType =
   | "price"
   | "area"
   | "image_url"
-  | "contact";
+  | "mobile";

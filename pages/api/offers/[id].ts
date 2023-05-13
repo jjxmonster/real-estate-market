@@ -30,6 +30,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     case "PUT": {
       try {
         const payload = req.body;
+
         offer = await updateOffer(offer.airtableID as string, payload);
         res.status(200).json({ status: "updated", offer });
       } catch (err) {

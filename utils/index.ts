@@ -69,9 +69,9 @@ export const offerFormFields: Array<{
     placeholder: "Tell us something more about property that you offer",
   },
   {
-    key: "contact",
+    key: "mobile",
     label: "Phone Number",
-    type: "number",
+    type: "text",
     placeholder: "Provide your phone number for users interested in your offer",
   },
   {

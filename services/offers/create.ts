@@ -10,7 +10,7 @@ const schema = Joi.object({
   area: Joi.number().greater(10).required(),
   category: Joi.string().valid("rent", "sale").required(),
   image_url: Joi.string().required(),
-  contact: Joi.string().required(),
+  mobile: Joi.string().required(),
 });
 
 const create = async (payload: OfferPayload, userId: string) => {

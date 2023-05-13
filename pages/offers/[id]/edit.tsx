@@ -34,14 +34,7 @@ const schema = yup
     category: yup.string().typeError("Category is a required field"),
     description: yup.string().required().min(10),
     area: yup.number().required().min(10),
-    contact: yup.number().required().min(9).max(9),
-    image_url: yup
-      .mixed()
-      .test(
-        "fileUpload",
-        "Upload Image is required",
-        value => value?.length && true
-      ),
+    mobile: yup.string().required().min(9).max(9),
   })
   .required();
 
@@ -54,7 +47,6 @@ const OfferEditPageProps: FunctionComponent<OfferEditPageProps> = ({
 }) => {
   const setLoadingState = useSetRecoilState(loadingState);
   const setNotificationState = useSetRecoilState(notificationState);
-  console.log(offer);
 
   const { push } = useRouter();
 
@@ -68,37 +60,33 @@ const OfferEditPageProps: FunctionComponent<OfferEditPageProps> = ({
   } = useForm<OfferFormType>({
     resolver: yupResolver(schema),
   });
-
   const onSubmit = handleSubmit(async payload => {
-    setLoadingState({ isLoading: true, message: "Creating New Offer..." });
+    setLoadingState({ isLoading: true, message: "Updating Offer..." });
 
-    payload.image_url &&
-      (await uploadimage(payload.image_url).then(async image_url => {
-        const response = await fetch("/api/offers", {
-          method: "POST",
-          body: JSON.stringify({ ...payload, image_url }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+    const response = await fetch(`/api/offers/${offer.id}`, {
+      method: "PUT",
+      body: JSON.stringify({ ...payload }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-        if (response.ok) {
-          setLoadingState({ isLoading: false, message: "" });
-          push(URL.THANKS_PAGE);
-        } else {
-          const payload = await response.json();
+    if (response.ok) {
+      setLoadingState({ isLoading: false, message: "" });
+      push(`${URL.OFFER_PAGE}${offer.id}`);
+    } else {
+      const response_json = await response.json();
 
-          setLoadingState({
-            isLoading: false,
-            message: "",
-          });
-          setNotificationState({
-            isVisible: true,
-            type: NotificatonType.DANGER,
-            message: payload.err.details[0]?.message,
-          });
-        }
-      }));
+      setLoadingState({
+        isLoading: false,
+        message: "",
+      });
+      setNotificationState({
+        isVisible: true,
+        type: NotificatonType.DANGER,
+        message: response_json.error,
+      });
+    }
   });
 
   const renderFields = offerFormFields.map(
@@ -144,11 +132,25 @@ const OfferEditPageProps: FunctionComponent<OfferEditPageProps> = ({
   );
 
   useEffect(() => {
+    const available_keys = [
+      "title",
+      "location",
+      "price",
+      "description",
+      "area",
+      "category",
+      "image_url",
+      "mobile",
+    ];
     Object.entries(offer).forEach(([key, value]) => {
-      setValue(
-        key as OfferFormKeysType,
-        value as string | number | FileList | null
-      );
+      if (available_keys.includes(key)) {
+        setValue(
+          key as OfferFormKeysType,
+          key === "mobile"
+            ? Number(value)
+            : (value as string | number | FileList | null)
+        );
+      }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
