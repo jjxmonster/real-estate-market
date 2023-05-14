@@ -1,10 +1,11 @@
-import NextAuth, { Session, User } from "next-auth";
+import NextAuth, { Session } from "next-auth";
+
 import CredentialsProvider from "next-auth/providers/credentials";
+import type { JWT } from "next-auth/jwt";
 import authorizeUser from "services/users/authorize";
 
-import type { JWT } from "next-auth/jwt";
-
 export default NextAuth({
+  secret: process.env.AUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "Credentials",
