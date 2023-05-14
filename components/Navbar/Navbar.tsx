@@ -11,14 +11,22 @@ interface NavItemProps {
 }
 
 const NavItem: FunctionComponent<NavItemProps> = ({ label }) => {
-  const { push } = useRouter();
+  const { push, query, pathname } = useRouter();
+  const isActive =
+    label === "All" && pathname === "/offers"
+      ? !query.category
+      : query.category === label.toLowerCase();
+
   const handleNavItemClick = () => {
     push(`/offers${label !== "All" ? `?category=${label.toLowerCase()}` : ""}`);
   };
+
   return (
     <div
       onClick={handleNavItemClick}
-      className="hover:bg-yellow transition-all cursor-pointer px-5 py-2 hover:bg-yellow_opacity rounded-md"
+      className={`transition-all ${
+        isActive && "bg-yellow_opacity"
+      } cursor-pointer px-5 py-2 hover:bg-yellow_opacity rounded-md`}
     >
       <p className="text-yellow text-md ">{label}</p>
     </div>
