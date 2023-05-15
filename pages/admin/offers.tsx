@@ -41,6 +41,28 @@ const AdminPanel: FunctionComponent<AdminPanelProps> = ({ offers, offset }) => {
       setCurrentOffers(updatedOffers);
     }
   };
+
+  const toggleActive = async (id: number) => {
+    setLoadingState({ isLoading: true, message: "" });
+    const response = await fetch(`/api/admin/${id}/toggleActive`, {
+      method: "PUT",
+    });
+
+    if (response.ok) {
+      setLoadingState({ isLoading: false, message: "" });
+
+      const { offer: updatedOffer } = await response.json();
+      const updatedOffers = currentOffers.map(offer => {
+        if (offer.id === updatedOffer.id) {
+          return updatedOffer;
+        }
+        return offer;
+      });
+
+      setCurrentOffers(updatedOffers);
+    }
+  };
+
   return (
     <div>
       <div className="relative overflow-x-auto">
@@ -77,7 +99,8 @@ const AdminPanel: FunctionComponent<AdminPanelProps> = ({ offers, offset }) => {
                 <td className="px-6 py-4">{offer.category}</td>
                 <td className="px-6 py-4 cursor-pointer">
                   <span
-                    className={`rounded-md bg-${
+                    onClick={() => toggleActive(offer.id)}
+                    className={`rounded-xl bg-${
                       offer.status === "active" ? "green" : "red"
                     } p-2`}
                   >
