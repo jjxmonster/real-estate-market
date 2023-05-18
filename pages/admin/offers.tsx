@@ -2,11 +2,13 @@ import { CheckIcon, DeleteIcon, EditIcon } from "components/Icons/Icons";
 import React, { FunctionComponent, useState } from "react";
 
 import { ApartmentOffer } from "types/common";
+import CustomTooltip from "components/Tooltip";
 import { GetServerSideProps } from "next";
 import getOffersForAdmin from "services/offers/allForAdmin";
 import { getSession } from "next-auth/react";
 import { jsonFetcher } from "utils";
 import { loadingState } from "atoms/atoms";
+import { useRouter } from "next/router";
 import { useSetRecoilState } from "recoil";
 
 interface AdminPanelProps {
@@ -19,6 +21,7 @@ const AdminPanel: FunctionComponent<AdminPanelProps> = ({ offers, offset }) => {
     useState<Array<ApartmentOffer>>(offers);
   const [currentOffset, setCurrentOffset] = useState(offset);
   const setLoadingState = useSetRecoilState(loadingState);
+  const { push } = useRouter();
 
   const loadMore = async () => {
     const response = await jsonFetcher(
@@ -108,9 +111,17 @@ const AdminPanel: FunctionComponent<AdminPanelProps> = ({ offers, offset }) => {
                   </span>
                 </td>
                 <td className="px-6 py-4 flex gap-1">
-                  <CheckIcon />
-                  <EditIcon />
-                  <DeleteIcon onClick={() => deleteOffer(offer.id)} />
+                  <CustomTooltip text={`Check Offer ID: ${offer.id}`}>
+                    <CheckIcon onClick={() => push(`/offers/${offer.id}`)} />
+                  </CustomTooltip>
+                  <CustomTooltip text={`Edit Offer ID: ${offer.id}`}>
+                    <EditIcon
+                      onClick={() => push(`/offers/${offer.id}/edit`)}
+                    />
+                  </CustomTooltip>
+                  <CustomTooltip text={`Delete Offer ID: ${offer.id}`}>
+                    <DeleteIcon onClick={() => deleteOffer(offer.id)} />
+                  </CustomTooltip>
                 </td>
               </tr>
             ))}

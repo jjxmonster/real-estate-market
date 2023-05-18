@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { FieldError } from "react-hook-form";
 
 import { ArrowDownIcon } from "../Icons/Icons";
+import { FieldError } from "react-hook-form";
 import { useRouter } from "next/router";
 
 interface DropdownProps {
@@ -36,18 +36,20 @@ function Dropdown({ label, items }: DropdownProps) {
         {label}
         {<ArrowDownIcon />}
       </label>
-      <div>
-        <div
-          id="selector"
-          className={`${
-            showItems ? "opacity-1" : "opacity-0"
-          } z-10 w-44  absolute rounded divide-y transition divide-gray-100 shadow-xl bg-black`}
-        >
-          <ul className="py-1 text-sm text-gray-700 rounded dark:text-gray-200">
-            {renderDropdownItems}
-          </ul>
+      {showItems && (
+        <div>
+          <div
+            id="selector"
+            className={`${
+              showItems ? "opacity-1" : "opacity-0"
+            } z-10 w-44  absolute rounded divide-y transition divide-gray-100 shadow-xl bg-black`}
+          >
+            <ul className="py-1 text-sm text-gray-700 rounded dark:text-gray-200">
+              {renderDropdownItems}
+            </ul>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
