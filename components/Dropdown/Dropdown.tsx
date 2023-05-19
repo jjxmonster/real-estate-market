@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import { ArrowDownIcon } from "../Icons/Icons";
-import { FieldError } from "react-hook-form";
 import { useRouter } from "next/router";
 
 interface DropdownProps {

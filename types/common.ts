@@ -77,3 +77,12 @@ export type OfferFormKeysType =
   | "area"
   | "image_url"
   | "mobile";
+
+export type ProductType = {
+  airtableID: string;
+  id: string;
+  name: string;
+  priceCents: number;
+  priceCurrency: string;
+  duration: number;
+};
