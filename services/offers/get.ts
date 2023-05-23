@@ -9,7 +9,7 @@ const get = async (id?: string): Promise<ApartmentOffer | undefined> => {
   if (offers && offers[0]) {
     return {
       airtableID: offers[0].id,
-      ...(offers[0].fields as ApartmentOffer),
+      ...(offers[0].fields as unknown as Omit<ApartmentOffer, "airtableID">),
     };
   }
 };

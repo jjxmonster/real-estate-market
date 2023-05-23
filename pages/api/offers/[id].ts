@@ -26,6 +26,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       } catch (err) {
         res.status(422).json({ status: "not_updated", err });
       }
+      break;
     }
     case "PUT": {
       try {
@@ -36,6 +37,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       } catch (err) {
         res.status(422).json({ status: "not_updated", err });
       }
+      break;
     }
     default:
       res.status(400);

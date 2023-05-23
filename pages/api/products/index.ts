@@ -12,6 +12,7 @@ const getProducts = async (req: NextApiRequest, res: NextApiResponse) => {
       } catch (error) {
         res.status(422).json({ products: [] });
       }
+      break;
     }
 
     default:

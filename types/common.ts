@@ -13,7 +13,11 @@ export type ApartmentOffer = {
   image_url: string;
   email?: string;
   users: Array<string>;
-  airtableID?: string;
+  airtableID: string;
+  stripeCheckoutID: string;
+  stripeCheckoutStatus: string;
+  highlightDuration: number;
+  highlightTill: Date;
 };
 
 // helpers
@@ -85,4 +89,10 @@ export type ProductType = {
   priceCents: number;
   priceCurrency: string;
   duration: number;
+};
+
+export type CheckoutPayloadType = {
+  id: string;
+  offerID: number;
+  quantity: number;
 };
