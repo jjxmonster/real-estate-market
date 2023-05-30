@@ -25,8 +25,7 @@ export const createCheckout = async (payload: CheckoutPayloadType) => {
         product_data: {
           name: product.name,
           metadata: {
-            productId: product.id,
-            duration: product.duration,
+            offerID: orderItem.id,
           },
         },
         unit_amount: product.priceCents,

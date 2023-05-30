@@ -45,3 +45,5 @@ const finalize = async (offerID: string) => {
     return { offer, checkout };
   }
 };
+
+export default finalize;

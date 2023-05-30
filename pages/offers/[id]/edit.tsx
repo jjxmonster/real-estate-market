@@ -21,7 +21,6 @@ import Selector from "../../../components/Selector/Selector";
 import getOfferByID from "services/offers/get";
 import { getSession } from "next-auth/react";
 import isAuthorized from "services/offers/isAuthorized";
-import uploadimage from "../../../services/offers/upload";
 import { useRouter } from "next/router";
 import { useSetRecoilState } from "recoil";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -162,7 +161,7 @@ const OfferEditPageProps: FunctionComponent<OfferEditPageProps> = ({
       </Head>
       <div className="flex flex-col items-center">
         <PageHeader
-          title="Edit that offer"
+          title="Edit your offer"
           description="Update the information and save your changes to keep your offer up-to-date."
         />
         <form className="w-3/4 flex flex-col gap-10">{renderFields}</form>

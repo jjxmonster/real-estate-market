@@ -26,17 +26,28 @@ interface OfferPageProps {
 type PageParams = {
   id: string;
 };
-interface EditOfferButton {
+interface OfferActionButton {
   offerID: number;
+  action: "edit" | "highlight";
 }
 
-const EditOfferButton: FunctionComponent<EditOfferButton> = ({ offerID }) => {
+const OfferActionButton: FunctionComponent<OfferActionButton> = ({
+  offerID,
+  action,
+}) => {
+  const isEditAction = action === "edit";
   const { push } = useRouter();
-  const handleMoveToEditor = () => {
-    push(`/offers/${offerID}/edit`);
+  const handleMoveToAction = () => {
+    push(`/offers/${offerID}/${action}`);
   };
 
-  return <Button label="Edit Offer" onClick={handleMoveToEditor} />;
+  return (
+    <Button
+      label={isEditAction ? "Edit" : "Highlight"}
+      onClick={handleMoveToAction}
+      type={`${isEditAction ? "primary" : "secondary"}`}
+    />
+  );
 };
 
 const OfferPage: FunctionComponent<OfferPageProps> = ({ offer }) => {
@@ -75,7 +86,12 @@ const OfferPage: FunctionComponent<OfferPageProps> = ({ offer }) => {
         </span>
         <div className="flex justify-between w-full">
           <h2 className="text-4xl font-medium text-white">{title}</h2>
-          {isAuthorized(offer, data) && <EditOfferButton offerID={offer.id} />}
+          {isAuthorized(offer, data) && (
+            <div>
+              <OfferActionButton action="highlight" offerID={offer.id} />
+              <OfferActionButton action="edit" offerID={offer.id} />
+            </div>
+          )}
         </div>
         <p className="text-gray-500 mt-5 mb-16 text-xl">{location}</p>
         <div className="flex w-full">
