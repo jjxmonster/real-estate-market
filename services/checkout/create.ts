@@ -1,4 +1,5 @@
 import { CheckoutPayloadType } from "types/common";
+import { Console } from "console";
 import Joi from "joi";
 import Stripe from "stripe";
 import airtableClient from "services/airtableClient";
@@ -17,11 +18,12 @@ export const createCheckout = async (payload: CheckoutPayloadType) => {
     apiVersion: "2022-11-15",
   });
   const product = await getProduct(orderItem.id);
+  console.log("CRETE CHECKOUT", product);
 
   const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [
     {
       price_data: {
-        currency: product.priceCurrency,
+        currency: "eur",
         product_data: {
           name: product.name,
           metadata: {

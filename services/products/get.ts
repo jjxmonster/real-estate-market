@@ -7,7 +7,6 @@ const get = async (airtableID: string): Promise<ProductType> => {
   if (product) {
     return { id: product.id, ...(product.fields as Omit<ProductType, "id">) };
   }
-
   return product;
 };
 
