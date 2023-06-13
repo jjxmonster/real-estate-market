@@ -23,7 +23,7 @@ const Offers: FunctionComponent<OffersProps> = ({ offers, offset }) => {
   const setLoadingState = useSetRecoilState(loadingState);
 
   const { query } = useRouter();
-
+  console.log(currentOffers);
   const renderApartments = currentOffers.map(
     ({
       id,

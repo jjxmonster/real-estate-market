@@ -28,9 +28,9 @@ const finalize = async (offerID: string) => {
       let highlightTillDate = new Date(
         Date.now() + 1000 * 60 * 60 * 24 * offer.highlightDuration
       );
-      let highlightTillISOString = highlightTillDate.toISOString();
-
-      offer = (await airDB("offers").update([
+      let highlightTillISOString = highlightTillDate.toString();
+      console.log(highlightTillISOString, "DATE");
+      const updated_offer = await airDB("offers").update([
         {
           id: offer.airtableID,
           fields: {
@@ -38,9 +38,9 @@ const finalize = async (offerID: string) => {
             highlightTill: highlightTillISOString,
           },
         },
-      ])) as unknown as ApartmentOffer;
+      ]);
 
-      return { offer, checkout };
+      return { offer: updated_offer[0].fields, checkout };
     }
     return { offer, checkout };
   }
