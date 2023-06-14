@@ -15,12 +15,15 @@ import { loadingState, notificationState } from "../../../atoms/atoms";
 import Button from "../../../components/Button/Button";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import InputComponent from "../../../components/InputComponent/InputComponent";
 import PageHeader from "../../../components/PageHeader/PageHeader";
 import Selector from "../../../components/Selector/Selector";
+import UploadButton from "components/UploadButton/UploadButton";
 import getOfferByID from "services/offers/get";
 import { getSession } from "next-auth/react";
 import isAuthorized from "services/offers/isAuthorized";
+import uploadimage from "services/offers/upload";
 import { useRouter } from "next/router";
 import { useSetRecoilState } from "recoil";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -61,10 +64,13 @@ const OfferEditPageProps: FunctionComponent<OfferEditPageProps> = ({
   });
   const onSubmit = handleSubmit(async payload => {
     setLoadingState({ isLoading: true, message: "Updating Offer..." });
-
+    let image_url = offer.image_url;
+    if (payload.image_url) {
+      image_url = await uploadimage(payload.image_url);
+    }
     const response = await fetch(`/api/offers/${offer.id}`, {
       method: "PUT",
-      body: JSON.stringify({ ...payload }),
+      body: JSON.stringify({ ...payload, image_url }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -91,7 +97,28 @@ const OfferEditPageProps: FunctionComponent<OfferEditPageProps> = ({
   const renderFields = offerFormFields.map(
     ({ key, label, placeholder, type }) => {
       if (type === "file" && key === "image_url") {
-        return null;
+        return (
+          <>
+            <UploadButton
+              error={errors[key]}
+              value={watch("image_url")}
+              key={key}
+              label="image"
+              register={register("image_url")}
+            />
+            {(watch("image_url")?.length as number) < 1 && (
+              <div className="w-auto h-60 overflow-hidden">
+                <Image
+                  width={200}
+                  height={200}
+                  className="w-auto h-60 object-cover"
+                  alt="Current Image"
+                  src={offer.image_url}
+                />
+              </div>
+            )}
+          </>
+        );
       }
       if (type === "dropdown" && key === "category") {
         return (
@@ -138,7 +165,6 @@ const OfferEditPageProps: FunctionComponent<OfferEditPageProps> = ({
       "description",
       "area",
       "category",
-      "image_url",
       "mobile",
     ];
     Object.entries(offer).forEach(([key, value]) => {

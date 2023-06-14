@@ -23,7 +23,7 @@ const Offers: FunctionComponent<OffersProps> = ({ offers, offset }) => {
   const setLoadingState = useSetRecoilState(loadingState);
 
   const { query } = useRouter();
-  console.log(currentOffers);
+  console.log(currentOffset);
   const renderApartments = currentOffers.map(
     ({
       id,
@@ -89,7 +89,9 @@ const Offers: FunctionComponent<OffersProps> = ({ offers, offset }) => {
         <div></div>
         <div className="grid gap-2 grid-cols-3">{renderApartments}</div>
         <div className="flex justify-center">
-          <Button label="Load more" onClick={handleLoadMore} />
+          {currentOffset && (
+            <Button label="Load more" onClick={handleLoadMore} />
+          )}
         </div>
       </div>
     </>
@@ -106,7 +108,7 @@ export const getStaticProps: GetStaticProps = async () => {
       offers: offers.records.map(
         (offer: { fields: ApartmentOffer }) => offer.fields
       ),
-      offset: offers.offset,
+      offset: offers.offset ?? null,
     },
   };
 };

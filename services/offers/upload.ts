@@ -1,15 +1,23 @@
-import supabase from "../supabaseClient";
-
 const upload = async (image: FileList): Promise<string> => {
-  const { data, error } = await supabase.storage
-    .from("images")
-    .upload(`${image[0].name}-${Date.now()}`, image[0]);
+  let response = await fetch("/api/upload");
+  let data = await response.json();
+  const formData = new FormData();
+  formData.append("file", image[0]);
+  formData.append("api_key", data.api_key);
+  formData.append("timestamp", data.timestamp);
+  formData.append("signature", data.sig);
+  console.log(data);
+  response = await fetch(
+    `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`,
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
 
-  if (error) {
-    throw new Error("Upload image error");
-  }
+  data = await response.json();
 
-  return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${data.path}`;
+  return data.secure_url;
 };
 
 export default upload;

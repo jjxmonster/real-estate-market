@@ -1,8 +1,8 @@
-import React, { FunctionComponent } from "react";
 import { FieldError, UseFormRegisterReturn } from "react-hook-form";
+import React, { FunctionComponent } from "react";
 
-import { UploadIcon } from "../Icons/Icons";
 import Image from "next/image";
+import { UploadIcon } from "../Icons/Icons";
 import { capitalizeFirstLetter } from "../../utils";
 
 interface UploadButtonProps {
@@ -24,17 +24,17 @@ const UploadButton: FunctionComponent<UploadButtonProps> = ({
     if (attachments != null) {
       const image = [...attachments];
 
-      return image.map((image, index) => {
+      return image.map(image => {
         return (
           <div
             key={URL.createObjectURL(image)}
-            className="w-52 h-52 overflow-hidden"
+            className="w-auto h-60 overflow-hidden"
           >
             <Image
               width={200}
               height={200}
-              className="w-52 h-52 object-cover"
-              alt={`Attached image number ${index + 1}`}
+              className="w-auto h-60 object-cover"
+              alt="Attached image"
               src={URL.createObjectURL(image)}
             />
           </div>
