@@ -29,7 +29,7 @@ const finalize = async (offerID: string) => {
         Date.now() + 1000 * 60 * 60 * 24 * offer.highlightDuration
       );
       let highlightTillISOString = highlightTillDate.toString();
-      console.log(highlightTillISOString, "DATE");
+
       const updated_offer = await airDB("offers").update([
         {
           id: offer.airtableID,

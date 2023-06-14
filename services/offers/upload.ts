@@ -6,7 +6,7 @@ const upload = async (image: FileList): Promise<string> => {
   formData.append("api_key", data.api_key);
   formData.append("timestamp", data.timestamp);
   formData.append("signature", data.sig);
-  console.log(data);
+
   response = await fetch(
     `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload`,
     {

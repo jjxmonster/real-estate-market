@@ -13,7 +13,6 @@ const ProductCard: FunctionComponent<ProductCardProps> = ({
   product,
   handleGetHighlight,
 }) => {
-  console.log(product);
   return (
     <div className="flex flex-col gap-y-10 flex-1 pb-10 m-10 max-w-[400px] overflow-hidden items-center  border-b-8 shadow-xl border-yellow cursor-pointer relative after:absolute after:w-full after:h-3/5 after:inset-0 after:z-0 after:bg-yellow after:rounded-b-full">
       <div className="py-12 w-full flex flex-col items-center gap-y-5 ">

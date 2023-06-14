@@ -29,7 +29,6 @@ const stripe = async (req: NextApiRequest, res: NextApiResponse) => {
       const metadata = event_object.metadata;
 
       await finalize(metadata?.offerID as string);
-      console.log("event", event);
     }
 
     res.json({ received: true });
