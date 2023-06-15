@@ -1,19 +1,19 @@
-import React, { FunctionComponent } from "react";
-import { useRouter } from "next/router";
-import { useSetRecoilState } from "recoil";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { signIn } from "next-auth/react";
 
-import { loadingState, notificationState } from "../../atoms/atoms";
-import { URL, loginrormFields } from "../../utils";
 import { NotificatonType, RegisterFormType } from "../../types/common";
+import React, { FunctionComponent } from "react";
+import { URL, loginrormFields } from "../../utils";
+import { loadingState, notificationState } from "../../atoms/atoms";
 
-import InputComponent from "../../components/InputComponent/InputComponent";
-import PageHeader from "../../components/PageHeader/PageHeader";
 import Button from "../../components/Button/Button";
 import Head from "next/head";
+import InputComponent from "../../components/InputComponent/InputComponent";
+import PageHeader from "../../components/PageHeader/PageHeader";
+import { signIn } from "next-auth/react";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import { useSetRecoilState } from "recoil";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const schema = yup
   .object({
@@ -55,6 +55,7 @@ const SignIn: FunctionComponent = () => {
         type: NotificatonType.DANGER,
         message: `Not authorized. Try Again`,
       });
+      setLoadingState({ isLoading: false, message: "" });
     }
   });
 
