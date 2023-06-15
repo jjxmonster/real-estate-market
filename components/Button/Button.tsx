@@ -14,7 +14,7 @@ const Button: FunctionComponent<ButtonProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`px-3.5 py-2 rounded-md  m-1 z-50  overflow-hidden relative group cursor-pointer border-2 font-medium border-yellow text-yellow text-gray-dark ${
+      className={`px-3.5 py-2 rounded-md  m-1 z-50  overflow-hidden relative group cursor-pointer border-2 font-medium border-yellow text-gray-dark ${
         type === "secondary" ? "bg-yellow" : "bg-gray-dark"
       }`}
     >
