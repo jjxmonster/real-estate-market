@@ -3,7 +3,6 @@ import * as React from "react";
 import { ApartmentOffer } from "types/common";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import PageHeader from "components/PageHeader/PageHeader";
 import finalizeCheckout from "services/checkout/finalize";
 import { getSession } from "next-auth/react";
 import isAuthorized from "services/offers/isAuthorized";
@@ -16,6 +15,7 @@ const PaymentStatus: React.FunctionComponent<PaymentStatusProps> = ({
   offer,
 }) => {
   const { stripeCheckoutStatus } = offer;
+
   return (
     <>
       <Head>
@@ -47,11 +47,14 @@ export const getServerSideProps: GetServerSideProps = async ({
   query,
 }) => {
   const session = await getSession({ req });
-  const offer = await finalizeCheckout(query.id as string);
+  const checkout_object = await finalizeCheckout(query.id as string);
 
   if (
-    !isAuthorized(offer?.offer as unknown as ApartmentOffer, session) ||
-    !offer
+    !isAuthorized(
+      checkout_object?.offer as unknown as ApartmentOffer,
+      session
+    ) ||
+    !checkout_object
   ) {
     return {
       notFound: true,
@@ -60,7 +63,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   return {
     props: {
-      offer,
+      offer: checkout_object.offer,
     },
   };
 };
