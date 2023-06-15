@@ -18,7 +18,7 @@ const toggleActive = async (id: string): Promise<ApartmentOffer | null> => {
     },
   ]);
 
-  return offer[0].fields as ApartmentOffer;
+  return offer[0].fields as unknown as ApartmentOffer;
 };
 
 export default toggleActive;
