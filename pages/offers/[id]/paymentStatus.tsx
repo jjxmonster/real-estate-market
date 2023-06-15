@@ -47,9 +47,9 @@ export const getServerSideProps: GetServerSideProps = async ({
   query,
 }) => {
   const session = await getSession({ req });
-  const { offer } = await finalizeCheckout(query.id as string);
+  const offer = await finalizeCheckout(query.id as string);
 
-  if (!isAuthorized(offer, session) || !offer) {
+  if (!isAuthorized(offer?.offer as ApartmentOffer, session) || !offer) {
     return {
       notFound: true,
     };
