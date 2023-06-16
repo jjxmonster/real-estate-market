@@ -18,6 +18,7 @@ export type ApartmentOffer = {
   stripeCheckoutStatus: string;
   highlightDuration: number;
   highlightTill: Date;
+  viewsCounter: number;
 };
 
 // helpers
