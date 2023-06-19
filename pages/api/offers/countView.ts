@@ -7,6 +7,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case "POST": {
       try {
+        console.log(req.body.id, "OFFER ID HERE");
         const offer = await updateViewsCounter(req.body.id);
 
         if (offer) {
