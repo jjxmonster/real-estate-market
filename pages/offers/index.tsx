@@ -33,18 +33,25 @@ const Offers: FunctionComponent<OffersProps> = ({ offers, offset }) => {
       category,
       location,
       price,
-    }: ApartmentOffer) => (
-      <ApartmentCard
-        id={id}
-        price={price}
-        key={id}
-        title={title}
-        area={area}
-        image_url={image_url}
-        category={category}
-        location={location}
-      />
-    )
+      highlightTill,
+    }: ApartmentOffer) => {
+      const isHightlight = highlightTill
+        ? new Date(highlightTill) > new Date()
+        : false;
+      return (
+        <ApartmentCard
+          isHightlight={isHightlight}
+          id={id}
+          price={price}
+          key={id}
+          title={title}
+          area={area}
+          image_url={image_url}
+          category={category}
+          location={location}
+        />
+      );
+    }
   );
 
   const handleLoadMore = async () => {

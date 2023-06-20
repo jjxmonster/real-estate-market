@@ -90,7 +90,9 @@ const ApartmentPageView: FunctionComponent<ApartmentPageViewProps> = ({
         )}
       </div>
       <p className="text-gray-500 mt-5 mb-5 text-xl">{location}</p>
-      <p className="text-gray-500 mt-5 mb-16 text-sm">VIEWS: {viewsCounter}</p>
+      <p className="text-gray-500 mt-5 mb-16 text-sm">
+        VIEWS: {viewsCounter + 1}
+      </p>
 
       <div className="flex w-full">
         <div className="flex w-full items-center justify-center rounded-md shadow-md">
