@@ -1,15 +1,14 @@
 import React, { FunctionComponent } from "react";
-import { useRouter } from "next/router";
 
-import PageHeader from "../../components/PageHeader/PageHeader";
-
-import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
-import getForUser from "services/offers/getForUser";
-import { ApartmentOffer } from "types/common";
 import ApartmentCard from "components/ApartmentCard/ApartmentCard";
-import { URL } from "utils";
+import { ApartmentOffer } from "types/common";
 import Button from "components/Button/Button";
+import { GetServerSideProps } from "next";
+import PageHeader from "../../components/PageHeader/PageHeader";
+import { URL } from "utils";
+import { getOffersCreatedByUser } from "services/offers/getForUser";
+import { getSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 type MyOffersProps = {
   offers: Array<ApartmentOffer>;
@@ -28,6 +27,7 @@ const MyOffers: FunctionComponent<MyOffersProps> = ({ offers }) => {
       price,
     }: ApartmentOffer) => (
       <ApartmentCard
+        isHightlight={false}
         id={id}
         price={price}
         key={id}
@@ -72,7 +72,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       },
     };
   }
-  const offers = await getForUser(session?.user.email as string);
+  const offers = await getOffersCreatedByUser(session?.user.email as string);
 
   return {
     props: {

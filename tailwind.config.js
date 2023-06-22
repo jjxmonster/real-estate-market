@@ -3,6 +3,24 @@ module.exports = {
   darkMode: "media", // 'media' or 'class'
   theme: {
     extend: {
+      animation: {
+        pulse: "pulse 2s infinite",
+      },
+      keyframes: {
+        pulse: {
+          "0%": {
+            transform: "scale(0.8)",
+            boxShadow: "0 0 0 0 rgba(229, 62, 62, 1)",
+          },
+          "70%": {
+            transform: "scale(1)",
+            boxShadow: "0 0 0 60px rgba(229, 62, 62, 0)",
+          },
+          "100%": {
+            transform: "scale(0.8)",
+          },
+        },
+      },
       colors: {
         "gray-dark": "#1d1d1d",
         yellow: "#fec303",

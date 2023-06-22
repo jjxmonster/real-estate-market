@@ -1,7 +1,9 @@
 import { ApartmentOffer } from "../../types/common";
 import airDB from "../airtableClient";
 
-const getForUser = async (email: string): Promise<Array<ApartmentOffer>> => {
+export const getOffersCreatedByUser = async (
+  email: string
+): Promise<Array<ApartmentOffer>> => {
   const offers = await airDB("offers")
     .select({
       sort: [{ field: "id", direction: "desc" }],
@@ -16,4 +18,20 @@ const getForUser = async (email: string): Promise<Array<ApartmentOffer>> => {
   return [];
 };
 
-export default getForUser;
+export const getUserFavouriteOffers = async (
+  email: string
+): Promise<Array<string>> => {
+  const user = await airDB("users")
+    .select({
+      filterByFormula: `email="${email}"`,
+    })
+    .firstPage();
+
+  const userFavouriteOffers = user[0].get("favouriteOffers") as Array<string>;
+
+  if (userFavouriteOffers) {
+    return userFavouriteOffers;
+  } else {
+    return [];
+  }
+};

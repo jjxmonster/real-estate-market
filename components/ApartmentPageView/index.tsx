@@ -9,6 +9,7 @@ import { URL, capitalizeFirstLetter, formatCurrency } from "utils";
 
 import { ApartmentOffer } from "../../types/common";
 import Button from "components/Button/Button";
+import FavouriteButton from "components/FavouriteButton";
 import Image from "next/image";
 import isAuthorized from "services/offers/isAuthorized";
 import { useRouter } from "next/router";
@@ -82,11 +83,13 @@ const ApartmentPageView: FunctionComponent<ApartmentPageViewProps> = ({
       </span>
       <div className="flex justify-between w-full">
         <h2 className="text-4xl font-medium text-white">{title}</h2>
-        {isAuthorized(offer, data) && (
+        {isAuthorized(offer, data) ? (
           <div>
             <OfferActionButton action="highlight" offerID={offer.id} />
             <OfferActionButton action="edit" offerID={offer.id} />
           </div>
+        ) : (
+          data && <FavouriteButton offer={offer} />
         )}
       </div>
       <p className="text-gray-500 mt-5 mb-5 text-xl">{location}</p>
