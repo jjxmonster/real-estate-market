@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { getSession } from "next-auth/react";
-import { getUserFavouriteOffers } from "services/offers/getForUser";
+import { getUserFavouriteOffersIDs } from "services/offers/getForUser";
 
 const favouriteOffersApi = async (
   req: NextApiRequest,
@@ -10,7 +10,7 @@ const favouriteOffersApi = async (
   switch (req.method) {
     case "GET": {
       const session = await getSession({ req });
-      const offers = await getUserFavouriteOffers(
+      const offers = await getUserFavouriteOffersIDs(
         session?.user.email as string
       );
       res.status(200).json(offers);

@@ -18,7 +18,7 @@ export const getOffersCreatedByUser = async (
   return [];
 };
 
-export const getUserFavouriteOffers = async (
+export const getUserFavouriteOffersIDs = async (
   email: string
 ): Promise<Array<string>> => {
   const user = await airDB("users")
@@ -34,4 +34,32 @@ export const getUserFavouriteOffers = async (
   } else {
     return [];
   }
+};
+
+export const getUserFavouriteOffers = async (
+  email: string
+): Promise<Array<ApartmentOffer>> => {
+  const user = await airDB("users")
+    .select({
+      filterByFormula: `email="${email}"`,
+    })
+    .firstPage();
+
+  const userFavouriteOffersIds = user[0].get(
+    "favouriteOffers"
+  ) as Array<string>;
+
+  const offers = await airDB("offers")
+    .select({
+      filterByFormula: `OR(${userFavouriteOffersIds
+        .map(id => `RECORD_ID()='${id}'`)
+        .join(",")})`,
+    })
+    .firstPage();
+
+  if (Array.isArray(offers)) {
+    return offers.map((offer: { fields: ApartmentOffer }) => offer.fields);
+  }
+
+  return [];
 };
