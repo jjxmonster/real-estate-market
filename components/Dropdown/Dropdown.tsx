@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 
 import { ArrowDownIcon } from "../Icons/Icons";
+import { URL } from "utils";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 interface DropdownProps {
   label: string;
@@ -11,8 +13,21 @@ interface DropdownProps {
 function Dropdown({ label, items }: DropdownProps) {
   const [showItems, setShowItems] = useState(false);
   const { push } = useRouter();
+  const { data } = useSession();
 
-  const renderDropdownItems = items.map(({ label, path }) => (
+  const itemsForUser = items
+    .map(item => {
+      if (item.path !== URL.ADMIN_PANEL) return item;
+
+      if (data?.user.role === "admin") {
+        return item;
+      } else {
+        return null;
+      }
+    })
+    .filter(item => item !== null) as Array<{ label: string; path: string }>;
+
+  const renderDropdownItems = itemsForUser.map(({ label, path }) => (
     <li
       key={label}
       onClick={() => {

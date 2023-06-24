@@ -3,6 +3,7 @@ import React, { FunctionComponent } from "react";
 import ApartmentCard from "components/ApartmentCard/ApartmentCard";
 import { ApartmentOffer } from "types/common";
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import PageHeader from "../../components/PageHeader/PageHeader";
 import { URL } from "utils";
 import { getSession } from "next-auth/react";
@@ -42,18 +43,25 @@ const FavouriteOffers: FunctionComponent<FavouriteOffersProps> = ({
   );
 
   return (
-    <div>
-      <PageHeader
-        title="Favourite Offers"
-        description="Here you can find a list of your favourite offers"
-      />
-      {offers.length === 0 && (
-        <div className="text-white w-full flex items-center flex-col gap-3">
-          <span className="text-xl">You do not have any favourite offers.</span>
-        </div>
-      )}
-      <div className="grid gap-2 grid-cols-3">{renderApartments}</div>
-    </div>
+    <>
+      <Head>
+        <title>HOME4U | Favourite Offers</title>
+      </Head>
+      <div>
+        <PageHeader
+          title="Favourite Offers"
+          description="Here you can find a list of your favourite offers"
+        />
+        {offers.length === 0 && (
+          <div className="text-white w-full flex items-center flex-col gap-3">
+            <span className="text-xl">
+              You do not have any favourite offers.
+            </span>
+          </div>
+        )}
+        <div className="grid gap-2 grid-cols-3">{renderApartments}</div>
+      </div>
+    </>
   );
 };
 

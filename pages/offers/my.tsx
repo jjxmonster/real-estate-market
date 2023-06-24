@@ -4,6 +4,7 @@ import ApartmentCard from "components/ApartmentCard/ApartmentCard";
 import { ApartmentOffer } from "types/common";
 import Button from "components/Button/Button";
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import PageHeader from "../../components/PageHeader/PageHeader";
 import { URL } from "utils";
 import { getOffersCreatedByUser } from "services/offers/getForUser";
@@ -41,22 +42,27 @@ const MyOffers: FunctionComponent<MyOffersProps> = ({ offers }) => {
   );
 
   return (
-    <div>
-      <PageHeader
-        title="My offers"
-        description="Here you can find a list of offers created by you."
-      />
-      {offers.length === 0 && (
-        <div className="text-white w-full flex items-center flex-col gap-3">
-          <span className="text-xl">You do not have any offers.</span>
-          <Button
-            label="Add new offer"
-            onClick={() => push(URL.NEW_OFFER_PAGE)}
-          />
-        </div>
-      )}
-      <div className="grid gap-2 grid-cols-3">{renderApartments}</div>
-    </div>
+    <>
+      <Head>
+        <title>HOME4U | My Offers</title>
+      </Head>
+      <div>
+        <PageHeader
+          title="My offers"
+          description="Here you can find a list of offers created by you."
+        />
+        {offers.length === 0 && (
+          <div className="text-white w-full flex items-center flex-col gap-3">
+            <span className="text-xl">You do not have any offers.</span>
+            <Button
+              label="Add new offer"
+              onClick={() => push(URL.NEW_OFFER_PAGE)}
+            />
+          </div>
+        )}
+        <div className="grid gap-2 grid-cols-3">{renderApartments}</div>
+      </div>
+    </>
   );
 };
 
