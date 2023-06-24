@@ -122,6 +122,32 @@ export const registerFormFields: Array<{
   },
 ];
 
+export const contactFormFields: Array<{
+  key: "name" | "email" | "message";
+  label: string;
+  type: string;
+  placeholder: string;
+}> = [
+  {
+    key: "name",
+    label: "Name",
+    type: "text",
+    placeholder: "John",
+  },
+  {
+    key: "email",
+    label: "E-mail",
+    type: "text",
+    placeholder: "john@example.com",
+  },
+  {
+    key: "message",
+    label: "Message",
+    type: "text",
+    placeholder: "Ask your questions here...",
+  },
+];
+
 export const loginrormFields: Array<{
   key: "email" | "password";
   label: string;

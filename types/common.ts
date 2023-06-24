@@ -66,6 +66,13 @@ export type OfferFormType = {
   image_url: FileList | null;
   mobile: number;
 };
+
+export type ContactFormType = {
+  message: string;
+  name: string;
+  email: string;
+};
+
 export type RegisterFormType = {
   name: string;
   email: string;

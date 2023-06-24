@@ -15,7 +15,7 @@ function Dropdown({ label, items }: DropdownProps) {
   const { push } = useRouter();
   const { data } = useSession();
 
-  const itemsForUser = items
+  const itemsForLoggedUser = items
     .map(item => {
       if (item.path !== URL.ADMIN_PANEL) return item;
 
@@ -27,7 +27,7 @@ function Dropdown({ label, items }: DropdownProps) {
     })
     .filter(item => item !== null) as Array<{ label: string; path: string }>;
 
-  const renderDropdownItems = itemsForUser.map(({ label, path }) => (
+  const renderDropdownItems = itemsForLoggedUser.map(({ label, path }) => (
     <li
       key={label}
       onClick={() => {
