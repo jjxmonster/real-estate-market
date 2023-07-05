@@ -12,6 +12,7 @@ import Button from "components/Button/Button";
 import FavouriteButton from "components/FavouriteButton";
 import Image from "next/image";
 import isAuthorized from "services/offers/isAuthorized";
+import supabase from "services/supabase";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
@@ -73,6 +74,19 @@ const ApartmentPageView: FunctionComponent<ApartmentPageViewProps> = ({
     countView();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleAddConversation = async () => {
+    const response = await supabase.from("conversations").insert([
+      {
+        participants: [offer.users[0], data?.user.id],
+        offer_id: offer.airtableID,
+      },
+    ]);
+
+    if (response.status === 201) {
+      push("/chat");
+    }
+  };
   return (
     <div className="my-16">
       <span
@@ -89,7 +103,16 @@ const ApartmentPageView: FunctionComponent<ApartmentPageViewProps> = ({
             <OfferActionButton action="edit" offerID={offer.id} />
           </div>
         ) : (
-          data && <FavouriteButton offer={offer} />
+          data && (
+            <div className="flex items-center gap-5">
+              <FavouriteButton offer={offer} />
+              <Button
+                label="Chat with an owner"
+                type="secondary"
+                onClick={handleAddConversation}
+              />
+            </div>
+          )
         )}
       </div>
       <p className="text-gray-500 mt-5 mb-5 text-xl">{location}</p>

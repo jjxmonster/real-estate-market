@@ -104,3 +104,11 @@ export type CheckoutPayloadType = {
   offerID: number;
   quantity: number;
 };
+
+export type ConversationType = {
+  created_at: string;
+  id: number;
+  messages?: Array<string>;
+  offer_id: string;
+  participants: Array<string>;
+};
