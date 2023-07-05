@@ -143,7 +143,7 @@ export const contactFormFields: Array<{
   {
     key: "message",
     label: "Message",
-    type: "text",
+    type: "area",
     placeholder: "Ask your questions here...",
   },
 ];

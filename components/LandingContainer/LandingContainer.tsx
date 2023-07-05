@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from "react";
-import Image from "next/image";
-import { useRouter } from "next/router";
 
 import Button from "../Button/Button";
+import Image from "next/image";
 import { URL } from "../../utils";
+import { useRouter } from "next/router";
 
 const LandingContainer: FunctionComponent = () => {
   const { push } = useRouter();

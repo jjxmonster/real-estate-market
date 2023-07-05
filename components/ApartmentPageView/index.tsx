@@ -9,7 +9,6 @@ import { URL, capitalizeFirstLetter, formatCurrency } from "utils";
 
 import { ApartmentOffer } from "../../types/common";
 import Button from "components/Button/Button";
-import ContactForm from "components/ContactForm";
 import FavouriteButton from "components/FavouriteButton";
 import Image from "next/image";
 import isAuthorized from "services/offers/isAuthorized";
@@ -143,7 +142,6 @@ const ApartmentPageView: FunctionComponent<ApartmentPageViewProps> = ({
         Description
       </h3>
       <p className="text-white w-3/4 text-xl leading-loose">{description}</p>
-      <ContactForm />
     </div>
   );
 };

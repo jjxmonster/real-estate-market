@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 
-import LandingContainer from "../components/LandingContainer/LandingContainer";
 import Head from "next/head";
+import LandingContainer from "../components/LandingContainer/LandingContainer";
 
 const Home: FunctionComponent = () => {
   return (
