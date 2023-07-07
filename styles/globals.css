@@ -8,6 +8,27 @@ body {
 .offer-page-image-containter {
   width: 100%;
 }
+::-webkit-scrollbar-thumb {
+  background: #fec303;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
+@layer utilities {
+  @variants responsive {
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  }
+}
 .offer-image {
   object-fit: contain;
   width: 100% !important;

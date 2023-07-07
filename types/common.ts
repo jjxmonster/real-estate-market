@@ -90,6 +90,10 @@ export type OfferFormKeysType =
   | "image_url"
   | "mobile";
 
+export type ConversationStateType = {
+  activeConversation: string | null;
+};
+
 export type ProductType = {
   airtableID: string;
   id: string;
@@ -105,10 +109,23 @@ export type CheckoutPayloadType = {
   quantity: number;
 };
 
-export type ConversationType = {
+export interface Conversation {
   created_at: string;
   id: number;
   messages?: Array<string>;
   offer_id: string;
   participants: Array<string>;
-};
+}
+
+export interface Message {
+  author: string;
+  conversation_id: string;
+  created_at: string;
+  id: number;
+  text: string;
+}
+
+export interface ChatParticipant {
+  id: string;
+  name: string;
+}

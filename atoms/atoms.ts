@@ -1,6 +1,10 @@
-import { atom } from "recoil";
+import {
+  ConversationStateType,
+  LoadingStateType,
+  NotificationStateType,
+} from "../types/common";
 
-import { LoadingStateType, NotificationStateType } from "../types/common";
+import { atom } from "recoil";
 
 // LOADING
 export const loadingState = atom<LoadingStateType>({
@@ -18,5 +22,13 @@ export const notificationState = atom<NotificationStateType>({
     type: null,
     message: "",
     isVisible: false,
+  },
+});
+
+// CHAT
+export const conversationState = atom<ConversationStateType>({
+  key: "conversationState",
+  default: {
+    activeConversation: null,
   },
 });
