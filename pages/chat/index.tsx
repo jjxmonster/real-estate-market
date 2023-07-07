@@ -1,43 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
-import Button from "components/Button/Button";
-import Conversation from "components/Conversation/Conversation";
-import ConversationList from "components/ConversationsList/ConversationList";
+import ChatView from "components/ChatView/ChatView";
 import Head from "next/head";
-import InputComponent from "components/InputComponent/InputComponent";
 import PageHeader from "components/PageHeader/PageHeader";
 import { URL } from "utils";
 import { loadingState } from "atoms/atoms";
-import supabase from "services/supabase";
-import useConversations from "hooks/useConversations";
-import useMessages from "hooks/useMessages";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useSetRecoilState } from "recoil";
 
 const Chat = () => {
-  const { data } = useSession();
-  const [text, setText] = useState("");
   const { push } = useRouter();
-
-  const conversations = useConversations(data?.user.id as string);
-  const messages = useMessages("123");
-
-  const handleCreateMessage = async () => {
-    console.log(text);
-    const res = await supabase.from("messages").insert([
-      {
-        text,
-        author: data?.user.id,
-        conversation_id: conversations[0].id,
-      },
-    ]);
-  };
-
-  const setLoadingState = useSetRecoilState(loadingState);
-
-  // const conversations = useConversations()
   const { status } = useSession();
+  const setLoadingState = useSetRecoilState(loadingState);
 
   useEffect(() => {
     setLoadingState({ isLoading: false, message: "" });
@@ -70,11 +45,7 @@ const Chat = () => {
           title="Conversations"
           description="Your Conversations with other users"
         />
-
-        <div className="flex">
-          <ConversationList />
-          <Conversation conversationId="" />
-        </div>
+        <ChatView />
       </div>
     </>
   );

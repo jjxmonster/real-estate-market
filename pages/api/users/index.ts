@@ -20,11 +20,11 @@ const usersApi = async (req: NextApiRequest, res: NextApiResponse) => {
       break;
     case "GET": {
       try {
-        // const userID = req.body.id;
-        const user = await getUsersByIds([
-          "recoOAff9qG2FMBII",
-          "rec8wEuM5nMyKGrVT",
-        ]);
+        const ids = req.query.ids as string;
+
+        const users = await getUsersByIds(ids.split(","));
+
+        res.status(200).json({ status: "ok", users });
       } catch (error: any) {
         res.status(422).json({ status: "error", error: error.message });
       }

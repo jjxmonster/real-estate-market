@@ -91,8 +91,12 @@ export type OfferFormKeysType =
   | "mobile";
 
 export type ConversationStateType = {
-  activeConversation: string | null;
+  activeConversation: ActiveConversationType | null;
 };
+
+interface ActiveConversationType extends Conversation {
+  name: string;
+}
 
 export type ProductType = {
   airtableID: string;
@@ -115,11 +119,12 @@ export interface Conversation {
   messages?: Array<string>;
   offer_id: string;
   participants: Array<string>;
+  last_message: string;
 }
 
 export interface Message {
   author: string;
-  conversation_id: string;
+  conversation_id: number;
   created_at: string;
   id: number;
   text: string;

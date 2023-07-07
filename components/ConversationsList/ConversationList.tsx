@@ -1,52 +1,81 @@
 import React, { FunctionComponent, useEffect } from "react";
 
+import { Conversation } from "types/common";
 import { UserIcon } from "components/Icons/Icons";
+import { conversationState } from "atoms/atoms";
 import useConversations from "hooks/useConversations";
+import useConversationsUsers from "hooks/useConversationsUsers";
 import { useSession } from "next-auth/react";
+import { useSetRecoilState } from "recoil";
 
-interface ConversationListProps {}
+interface ConversationListItemProps {
+  conversation: Conversation;
+  name: string;
+  lastMessage: string;
+}
+interface ConversationListProps {
+  conversations: Array<Conversation>;
+}
 
-interface ConversationListItemProps {}
+const ConversationListItem: FunctionComponent<ConversationListItemProps> = ({
+  name,
+  lastMessage,
+  conversation,
+}) => {
+  const setActiveConversation = useSetRecoilState(conversationState);
 
-const ConversationListItem: FunctionComponent<
-  ConversationListItemProps
-> = () => {
+  const handleChangeActiveConversation = () => {
+    setActiveConversation({
+      activeConversation: {
+        ...conversation,
+        name,
+      },
+    });
+  };
+
   return (
-    <div className="w-full bg-gray-800 rounded-md flex items-center p-5 mb-5 cursor-pointer">
+    <div
+      className="w-full bg-gray-800 rounded-md flex items-center p-5 mb-5 cursor-pointer"
+      onClick={handleChangeActiveConversation}
+    >
       <div className="text-yellow pr-5">
         <UserIcon />
       </div>
       <div className="flex flex-col">
-        <span className="text-white font-semibold text-xl">John Doe</span>
+        <span className="text-white font-semibold text-xl">{name}</span>
         <span className="text-gray-500 font-extralight text-m">
-          Lorem ipsum dolor sit amet
+          {lastMessage}
         </span>
       </div>
     </div>
   );
 };
 
-const ConversationList: FunctionComponent<ConversationListProps> = () => {
+const ConversationList: FunctionComponent<ConversationListProps> = ({
+  conversations,
+}) => {
   const { data } = useSession();
-  const conversations = useConversations(data?.user.id as string);
 
-  console.log(conversations);
+  const convesatiationsUsersIds = conversations.map(conv => {
+    return conv.participants.filter(id => id !== data?.user.id);
+  });
+  const conversationsUsers = useConversationsUsers(
+    convesatiationsUsersIds.flat()
+  );
 
   const renderConversations = conversations.map(conversation => {
-    return <ConversationListItem key={conversation.id} />;
+    const userForConversation = conversationsUsers.find(user =>
+      conversation.participants.includes(user.id)
+    );
+    return (
+      <ConversationListItem
+        key={conversation.id}
+        name={userForConversation?.name as string}
+        conversation={conversation}
+        lastMessage="test"
+      />
+    );
   });
-
-  const getids = async () => {
-    const response = await fetch("/api/users", {
-      method: "GET",
-    });
-
-    console.log(response);
-  };
-
-  useEffect(() => {
-    getids();
-  }, []);
 
   return (
     <div className="w-2/6  overflow-y-scroll p-5 pt-0 no-scrollbar max-h-[700px]">

@@ -19,6 +19,35 @@ const useConversations = (userID: string) => {
     };
 
     getAllConversations();
+
+    const channel = supabase
+      .channel("schema-db-changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "conversations",
+        },
+        payload => {
+          const updatedConversation = payload.new as Conversation;
+
+          setConversations(prevConversations => {
+            return [
+              ...prevConversations.filter(
+                conversation => conversation.id !== updatedConversation.id
+              ),
+              updatedConversation,
+            ];
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      channel.unsubscribe();
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

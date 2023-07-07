@@ -3,16 +3,29 @@ import { useEffect, useState } from "react";
 import { Message } from "types/common";
 import supabase from "services/supabase";
 
-const useMessages = (conversationID: string): Message[] => {
+const useMessages = (conversationID: number): Message[] => {
   const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
+    const getAllMessages = async () => {
+      const { data, error } = await supabase
+        .from("messages")
+        .select("*")
+        .eq("conversation_id", conversationID);
+
+      if (data && !error) {
+        setMessages(data);
+      }
+    };
+
+    getAllMessages();
+
     const channel = supabase
       .channel("schema-db-changes")
       .on(
         "postgres_changes",
         {
-          event: "*",
+          event: "INSERT",
           schema: "public",
           table: "messages",
         },
