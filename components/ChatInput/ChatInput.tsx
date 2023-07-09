@@ -34,7 +34,9 @@ const ChatInput: FunctionComponent = ({}) => {
         placeholder="Type your message..."
       />
       <div
-        className=" rounded-full border-2 ml-5 border-yellow_opacity cursor-pointer"
+        className={`${
+          message.length === 0 && "opacity-50 pointer-events-none	"
+        } rounded-full border-2 ml-5 border-yellow_opacity cursor-pointer`}
         onClick={sendMessage}
       >
         <SendMessageIcon />
