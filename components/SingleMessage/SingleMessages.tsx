@@ -10,7 +10,9 @@ const SingleMessage: FunctionComponent<SingleMessageProps> = ({
   isFromLoggedUser,
 }) => {
   return (
-    <div className={`w-full flex ${isFromLoggedUser && "justify-end"}`}>
+    <div
+      className={`w-full flex ${isFromLoggedUser && "justify-end"} rotate-180`}
+    >
       <div
         className={`shadow-md p-5 border-2 border-gray-dark max-w-[70%] text-white ${
           isFromLoggedUser ? "bg-yellow_opacity" : "bg-transparent"

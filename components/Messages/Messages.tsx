@@ -15,8 +15,8 @@ const MessagesContainer: FunctionComponent<MessagesContainerProps> = ({
   const { data } = useSession();
 
   return (
-    <div className="w-full h-full p-5">
-      {messages.map(message => {
+    <div className="w-full h-full p-5 overflow-y-scroll no-scrollbar rotate-180">
+      {messages.toReversed().map(message => {
         const isFromLoggedUser = message.author === data?.user.id;
         return (
           <SingleMessage
