@@ -16,16 +16,22 @@ const MessagesContainer: FunctionComponent<MessagesContainerProps> = ({
 
   return (
     <div className="w-full h-full p-5 overflow-y-scroll no-scrollbar rotate-180">
-      {messages.toReversed().map(message => {
-        const isFromLoggedUser = message.author === data?.user.id;
-        return (
-          <SingleMessage
-            key={message.id}
-            text={message.text}
-            isFromLoggedUser={isFromLoggedUser}
-          />
-        );
-      })}
+      {messages
+        .sort((a, b) => {
+          return (
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
+        })
+        .map(message => {
+          const isFromLoggedUser = message.author === data?.user.id;
+          return (
+            <SingleMessage
+              key={message.id}
+              text={message.text}
+              isFromLoggedUser={isFromLoggedUser}
+            />
+          );
+        })}
     </div>
   );
 };

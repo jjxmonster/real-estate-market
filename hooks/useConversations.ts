@@ -3,8 +3,12 @@ import { useEffect, useState } from "react";
 import { Conversation } from "types/common";
 import supabase from "services/supabase";
 
-const useConversations = (userID: string) => {
-  const [conversations, setConversations] = useState<Array<Conversation>>([]);
+const useConversations = (
+  userID: string,
+  defaultValue: Array<Conversation>
+) => {
+  const [conversations, setConversations] =
+    useState<Array<Conversation>>(defaultValue);
 
   useEffect(() => {
     const getAllConversations = async () => {

@@ -90,13 +90,18 @@ export type OfferFormKeysType =
   | "image_url"
   | "mobile";
 
-export type ConversationStateType = {
+export type ActiveConversationStateType = {
   activeConversation: ActiveConversationType | null;
 };
 
 interface ActiveConversationType extends Conversation {
   name: string;
 }
+
+export type ConversationsStateType = {
+  conversations: Conversation[];
+  conversationsUsers: ChatParticipant[];
+};
 
 export type ProductType = {
   airtableID: string;

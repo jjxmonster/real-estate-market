@@ -19,6 +19,7 @@ export const URL = {
   MY_OFFERS_PAGE: "/offers/my",
   ADMIN_PANEL: "/admin/offers",
   FAV_OFFERS: "/offers/favourites",
+  CHAT: "/chat",
 };
 
 export const formatCurrency = new Intl.NumberFormat("en-US", {
@@ -173,6 +174,7 @@ export const userDropdownItems = [
   { label: "Create new offer", path: URL.NEW_OFFER_PAGE },
   { label: "Admin Panel", path: URL.ADMIN_PANEL },
   { label: "Favourite Offers", path: URL.FAV_OFFERS },
+  { label: "Conversations", path: URL.CHAT },
 ];
 
 export const getHashedPassword = (password: string, salt: string) =>

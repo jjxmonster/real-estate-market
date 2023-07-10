@@ -1,5 +1,6 @@
 import {
-  ConversationStateType,
+  ActiveConversationStateType,
+  ConversationsStateType,
   LoadingStateType,
   NotificationStateType,
 } from "../types/common";
@@ -26,9 +27,17 @@ export const notificationState = atom<NotificationStateType>({
 });
 
 // CHAT
-export const conversationState = atom<ConversationStateType>({
+export const activeConversationState = atom<ActiveConversationStateType>({
   key: "conversationState",
   default: {
     activeConversation: null,
+  },
+});
+
+export const conversationsState = atom<ConversationsStateType>({
+  key: "activeConversationsState",
+  default: {
+    conversations: [],
+    conversationsUsers: [],
   },
 });

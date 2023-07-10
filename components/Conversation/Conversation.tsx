@@ -3,14 +3,14 @@ import React, { FunctionComponent } from "react";
 import ChatInput from "components/ChatInput/ChatInput";
 import MessagesContainer from "components/Messages/Messages";
 import { UserIcon } from "components/Icons/Icons";
-import { conversationState } from "atoms/atoms";
+import { activeConversationState } from "atoms/atoms";
 import { useRecoilValue } from "recoil";
 
 const Conversation: FunctionComponent = () => {
-  const { activeConversation } = useRecoilValue(conversationState);
+  const { activeConversation } = useRecoilValue(activeConversationState);
 
   return (
-    <div className="w-4/6 h-[700px] bg-gray-800 flex flex-col rounded-md">
+    <div className="w-4/6 h-[700px] border-gray-700 border flex flex-col rounded-md">
       {activeConversation ? (
         <>
           <div className="w-full flex items-center p-5 mb-5 border-b-2 border-gray-dark">

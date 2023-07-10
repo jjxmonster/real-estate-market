@@ -1,26 +1,32 @@
 import React, { FunctionComponent, useState } from "react";
 
 import { SendMessageIcon } from "components/Icons/Icons";
-import { conversationState } from "atoms/atoms";
+import { activeConversationState } from "atoms/atoms";
 import supabase from "services/supabase";
 import { useRecoilValue } from "recoil";
 import { useSession } from "next-auth/react";
 
 const ChatInput: FunctionComponent = ({}) => {
-  const { activeConversation } = useRecoilValue(conversationState);
+  const { activeConversation } = useRecoilValue(activeConversationState);
   const { data } = useSession();
   const [message, setMessage] = useState<string>("");
 
   const sendMessage = async () => {
-    const { data: res, error } = await supabase.from("messages").insert([
-      {
-        conversation_id: activeConversation?.id,
-        author: data?.user.id,
-        text: message,
-      },
+    const response = await Promise.all([
+      supabase.from("messages").insert([
+        {
+          conversation_id: activeConversation?.id,
+          author: data?.user.id,
+          text: message,
+        },
+      ]),
+      supabase
+        .from("conversations")
+        .update({ last_message: message })
+        .eq("id", activeConversation?.id),
     ]);
 
-    if (error === null) {
+    if (response) {
       setMessage("");
     }
   };

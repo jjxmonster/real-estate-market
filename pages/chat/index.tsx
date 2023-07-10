@@ -1,39 +1,36 @@
-import React, { useEffect } from "react";
+import { ChatParticipant, Conversation } from "types/common";
+import React, { FunctionComponent, useEffect } from "react";
+import { conversationsState, loadingState } from "atoms/atoms";
+import { getSession, useSession } from "next-auth/react";
 
 import ChatView from "components/ChatView/ChatView";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import PageHeader from "components/PageHeader/PageHeader";
 import { URL } from "utils";
-import { loadingState } from "atoms/atoms";
+import { getConversationForUser } from "services/chat/getConversations";
+import { getUsersByIds } from "services/users/get";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import { useSetRecoilState } from "recoil";
 
-const Chat = () => {
-  const { push } = useRouter();
-  const { status } = useSession();
-  const setLoadingState = useSetRecoilState(loadingState);
+interface ChatProps {
+  conversations: Conversation[];
+  conversationsUsers: ChatParticipant[];
+}
+
+const Chat: FunctionComponent<ChatProps> = ({
+  conversations,
+  conversationsUsers,
+}) => {
+  const setConversationState = useSetRecoilState(conversationsState);
 
   useEffect(() => {
-    setLoadingState({ isLoading: false, message: "" });
+    setConversationState({
+      conversations,
+      conversationsUsers,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  if (status === "loading") {
-    setLoadingState({ isLoading: true, message: "Loading..." });
-
-    return null;
-  } else if (status === "unauthenticated") {
-    setLoadingState({ isLoading: true, message: "Redirecting..." });
-
-    setTimeout(() => {
-      setLoadingState({ isLoading: false, message: "" });
-
-      push(URL.HOME_PAGE);
-    }, 1000);
-
-    return null;
-  }
 
   return (
     <>
@@ -52,3 +49,30 @@ const Chat = () => {
 };
 
 export default Chat;
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const session = await getSession({ req });
+  if (!session) {
+    return {
+      redirect: {
+        destination: URL.LOGIN_PAGE,
+        permanent: false,
+      },
+    };
+  }
+  const conversations = await getConversationForUser(session.user.id);
+
+  const convesatiationsUsersIds = conversations.map(conv => {
+    return conv.participants.filter(id => id !== session?.user.id);
+  });
+  const conversationsUsers = await getUsersByIds(
+    convesatiationsUsersIds.flat()
+  );
+
+  return {
+    props: {
+      conversations,
+      conversationsUsers,
+    },
+  };
+};

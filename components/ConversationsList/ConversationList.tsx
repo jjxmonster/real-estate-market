@@ -1,20 +1,16 @@
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent, useCallback } from "react";
+import { activeConversationState, conversationsState } from "atoms/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 import { Conversation } from "types/common";
 import { UserIcon } from "components/Icons/Icons";
-import { conversationState } from "atoms/atoms";
 import useConversations from "hooks/useConversations";
-import useConversationsUsers from "hooks/useConversationsUsers";
 import { useSession } from "next-auth/react";
-import { useSetRecoilState } from "recoil";
 
 interface ConversationListItemProps {
   conversation: Conversation;
   name: string;
   lastMessage: string;
-}
-interface ConversationListProps {
-  conversations: Array<Conversation>;
 }
 
 const ConversationListItem: FunctionComponent<ConversationListItemProps> = ({
@@ -22,7 +18,9 @@ const ConversationListItem: FunctionComponent<ConversationListItemProps> = ({
   lastMessage,
   conversation,
 }) => {
-  const setActiveConversation = useSetRecoilState(conversationState);
+  const [{ activeConversation }, setActiveConversation] = useRecoilState(
+    activeConversationState
+  );
 
   const handleChangeActiveConversation = () => {
     setActiveConversation({
@@ -32,10 +30,12 @@ const ConversationListItem: FunctionComponent<ConversationListItemProps> = ({
       },
     });
   };
-
   return (
     <div
-      className="w-full bg-gray-800 rounded-md flex items-center p-5 mb-5 cursor-pointer"
+      className={`w-full border-gray-700 border rounded-md flex items-center p-5 mb-5 cursor-pointer relative after:absolute after:invisible after:top-0 after:left-0 after:border-yellow after:border-l-2 !after:border-md after:border-t-2 after:w-0 after:h-0 after:ease after:transition-all	 hover:after:h-full hover:after:w-full hover:after:visible before:absolute before:invisible before:bottom-0 before:right-0 before:rounded-md before:border-yellow before:border-b-2 before:border-r-2 before:w-0 before:h-0 before:ease before:transition-all	 hover:before:h-full hover:before:w-full hover:before:visible after:duration-300 before:duration-300 ${
+        activeConversation?.id === conversation.id &&
+        "before:h-full before:w-full before:!visible after:rounded-md after:!visible after:w-full after:h-full"
+      }`}
       onClick={handleChangeActiveConversation}
     >
       <div className="text-yellow pr-5">
@@ -51,35 +51,38 @@ const ConversationListItem: FunctionComponent<ConversationListItemProps> = ({
   );
 };
 
-const ConversationList: FunctionComponent<ConversationListProps> = ({
-  conversations,
-}) => {
+const ConversationList: FunctionComponent = () => {
+  const { conversationsUsers, conversations } =
+    useRecoilValue(conversationsState);
   const { data } = useSession();
-
-  const convesatiationsUsersIds = conversations.map(conv => {
-    return conv.participants.filter(id => id !== data?.user.id);
-  });
-  const conversationsUsers = useConversationsUsers(
-    convesatiationsUsersIds.flat()
+  const realtimeConversations = useConversations(
+    data?.user.id as string,
+    conversations
   );
 
-  const renderConversations = conversations.map(conversation => {
-    const userForConversation = conversationsUsers.find(user =>
-      conversation.participants.includes(user.id)
-    );
-    return (
-      <ConversationListItem
-        key={conversation.id}
-        name={userForConversation?.name as string}
-        conversation={conversation}
-        lastMessage="test"
-      />
-    );
-  });
+  const renderConversations = useCallback(
+    () =>
+      realtimeConversations.map(conversation => {
+        const userForConversation = conversationsUsers.find(user =>
+          conversation.participants.includes(user.id)
+        );
+
+        return (
+          <ConversationListItem
+            key={conversation.id}
+            name={userForConversation?.name as string}
+            conversation={conversation}
+            lastMessage={conversation.last_message}
+          />
+        );
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [realtimeConversations]
+  );
 
   return (
     <div className="w-2/6  overflow-y-scroll p-5 pt-0 no-scrollbar max-h-[700px]">
-      {renderConversations}
+      {renderConversations()}
     </div>
   );
 };

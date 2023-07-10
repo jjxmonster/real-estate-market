@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
 
 import { Message } from "types/common";
+import { loadingState } from "atoms/atoms";
 import supabase from "services/supabase";
+import { useSetRecoilState } from "recoil";
 
 const useMessages = (conversationID: number): Message[] => {
   const [messages, setMessages] = useState<Message[]>([]);
+  const setLoadingState = useSetRecoilState(loadingState);
 
   useEffect(() => {
     const getAllMessages = async () => {
+      setLoadingState({ message: "Messages loading...", isLoading: true });
       const { data, error } = await supabase
         .from("messages")
         .select("*")
         .eq("conversation_id", conversationID);
 
       if (data && !error) {
+        setLoadingState({ message: "", isLoading: false });
+
         setMessages(data);
       }
     };

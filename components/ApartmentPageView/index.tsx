@@ -84,7 +84,7 @@ const ApartmentPageView: FunctionComponent<ApartmentPageViewProps> = ({
     ]);
 
     if (response.status === 201) {
-      push("/chat");
+      push(URL.CHAT);
     }
   };
   return (
