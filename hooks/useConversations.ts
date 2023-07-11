@@ -3,29 +3,12 @@ import { useEffect, useState } from "react";
 import { Conversation } from "types/common";
 import supabase from "services/supabase";
 
-const useConversations = (
-  userID: string,
-  defaultValue: Array<Conversation>
-) => {
-  const [conversations, setConversations] =
-    useState<Array<Conversation>>(defaultValue);
+const useConversations = (defaultValue: Array<Conversation>) => {
+  const [conversations, setConversations] = useState<Array<Conversation>>([]);
 
   useEffect(() => {
-    const getAllConversations = async () => {
-      const { data, error } = await supabase
-        .from("conversations")
-        .select("*")
-        .contains("participants", [userID]);
-
-      if (data && !error) {
-        setConversations(data);
-      }
-    };
-
-    getAllConversations();
-
     const channel = supabase
-      .channel("schema-db-changes")
+      .channel("conversations-channel")
       .on(
         "postgres_changes",
         {
@@ -54,6 +37,10 @@ const useConversations = (
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setConversations(defaultValue);
+  }, [defaultValue]);
 
   return conversations;
 };

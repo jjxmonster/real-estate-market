@@ -5,7 +5,6 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { Conversation } from "types/common";
 import { UserIcon } from "components/Icons/Icons";
 import useConversations from "hooks/useConversations";
-import { useSession } from "next-auth/react";
 
 interface ConversationListItemProps {
   conversation: Conversation;
@@ -54,11 +53,7 @@ const ConversationListItem: FunctionComponent<ConversationListItemProps> = ({
 const ConversationList: FunctionComponent = () => {
   const { conversationsUsers, conversations } =
     useRecoilValue(conversationsState);
-  const { data } = useSession();
-  const realtimeConversations = useConversations(
-    data?.user.id as string,
-    conversations
-  );
+  const realtimeConversations = useConversations(conversations);
 
   const renderConversations = useCallback(
     () =>
@@ -81,7 +76,7 @@ const ConversationList: FunctionComponent = () => {
   );
 
   return (
-    <div className="w-2/6  overflow-y-scroll p-5 pt-0 no-scrollbar max-h-[700px]">
+    <div className="w-2/6 overflow-y-scroll p-5 pt-0 no-scrollbar max-h-[700px]">
       {renderConversations()}
     </div>
   );

@@ -27,7 +27,7 @@ const useMessages = (conversationID: number): Message[] => {
     getAllMessages();
 
     const channel = supabase
-      .channel("schema-db-changes")
+      .channel("messages-channel")
       .on(
         "postgres_changes",
         {
@@ -47,6 +47,7 @@ const useMessages = (conversationID: number): Message[] => {
     return () => {
       channel.unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conversationID]);
 
   return messages;
