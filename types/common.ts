@@ -125,6 +125,7 @@ export interface Conversation {
   offer_id: string;
   participants: Array<string>;
   last_message: string;
+  updated_at: Date;
 }
 
 export interface Message {

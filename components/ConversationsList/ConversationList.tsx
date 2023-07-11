@@ -4,6 +4,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 
 import { Conversation } from "types/common";
 import { UserIcon } from "components/Icons/Icons";
+import { sortByDate } from "utils";
 import useConversations from "hooks/useConversations";
 
 interface ConversationListItemProps {
@@ -57,7 +58,7 @@ const ConversationList: FunctionComponent = () => {
 
   const renderConversations = useCallback(
     () =>
-      realtimeConversations.map(conversation => {
+      sortByDate([...realtimeConversations], "updated_at").map(conversation => {
         const userForConversation = conversationsUsers.find(user =>
           conversation.participants.includes(user.id)
         );

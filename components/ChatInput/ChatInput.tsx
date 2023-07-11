@@ -22,7 +22,7 @@ const ChatInput: FunctionComponent = ({}) => {
       ]),
       supabase
         .from("conversations")
-        .update({ last_message: message })
+        .update({ last_message: message, updated_at: new Date() })
         .eq("id", activeConversation?.id),
     ]);
 

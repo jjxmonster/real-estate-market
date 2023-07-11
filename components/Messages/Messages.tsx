@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react";
 
 import SingleMessage from "components/SingleMessage/SingleMessages";
+import { sortByDate } from "utils";
 import useMessages from "hooks/useMessages";
 import { useSession } from "next-auth/react";
 
@@ -16,22 +17,16 @@ const MessagesContainer: FunctionComponent<MessagesContainerProps> = ({
 
   return (
     <div className="w-full h-full p-5 overflow-y-scroll no-scrollbar rotate-180">
-      {messages
-        .sort((a, b) => {
-          return (
-            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-          );
-        })
-        .map(message => {
-          const isFromLoggedUser = message.author === data?.user.id;
-          return (
-            <SingleMessage
-              key={message.id}
-              text={message.text}
-              isFromLoggedUser={isFromLoggedUser}
-            />
-          );
-        })}
+      {sortByDate(messages, "created_at").map(message => {
+        const isFromLoggedUser = message.author === data?.user.id;
+        return (
+          <SingleMessage
+            key={message.id}
+            text={message.text}
+            isFromLoggedUser={isFromLoggedUser}
+          />
+        );
+      })}
     </div>
   );
 };
