@@ -7,7 +7,10 @@ export const jsonFetcher = (url: string) => fetch(url).then(res => res.json());
 export const capitalizeFirstLetter = (text: string) => {
   return text.charAt(0).toUpperCase() + text.slice(1);
 };
-export const sortByDate = (array: Array<any>, key: string): Array<any> => {
+export const sortByDate = <T extends Record<string, any>>(
+  array: Array<T>,
+  key: string
+): Array<T> => {
   return array.sort((a, b) => {
     return new Date(b[key]).getTime() - new Date(a[key]).getTime();
   });

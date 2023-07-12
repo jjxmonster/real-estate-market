@@ -1,14 +1,13 @@
-import { activeConversationState, loadingState } from "atoms/atoms";
 import { useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
 
 import { Message } from "types/common";
+import { loadingState } from "atoms/atoms";
 import supabase from "services/supabase";
+import { useSetRecoilState } from "recoil";
 
 const useMessages = (conversationID: number): Message[] => {
   const [messages, setMessages] = useState<Message[]>([]);
   const setLoadingState = useSetRecoilState(loadingState);
-  const { activeConversation } = useRecoilValue(activeConversationState);
 
   useEffect(() => {
     const getAllMessages = async () => {
