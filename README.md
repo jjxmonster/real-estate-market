@@ -1,34 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Real Estate Market App
 
-## Getting Started
+Real Estate Market is a Next.js fullstack application where users can create accounts, add/edit property offer, and browse offers posted by other users. The application incorporates pagination for smooth browsing experience. Additionally, users have the option to buy promotion for their offers, with payments processed through Stripe. The latest feature is chat, powered by Supabase Realtime Database, if user is interested with some offer, he can write directly to an owner
 
-First, run the development server:
+<img src="https://www.tarabasz.dev/img/real-estate1.png" alt="img1" width="400" height="300">
+<br>
+<img src="https://www.tarabasz.dev/img/real-estate2.png" alt="img1" width="400" height="300">
+
+## Live
+
+https://real-estate-market-delta.vercel.app/
+
+## Environment Variables
 
 ```bash
-npm run dev
-# or
-yarn dev
+AIRTABLE_API_KEY=
+AIRTABLE_BASE=
+
+NEXTAUTH_SECRET=
+NEXT_PUBLIC_STRIPE_KEY=
+STRIPE_SECRET_KEY=
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+STRIPE_WEBHOOK_SECRET=
+NEXT_PUBLIC_CLOUDINARY_NAME=
+NEXT_PUBLIC_CLOUDINARY_KEY=
+CLOUDINARY_SECRET=
+
+NEXT_PUBLIC_SUPABASE_API=
+SUPABASE_SERVICE_KEY=
+NEXT_PUBLIC_SUPABASE_URL=
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Run locally
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Install dependencies
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```bash
+  npm install
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Start the server
 
-## Learn More
+```bash
+  npm run start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Tech stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Next.js
+- Typescript
+- Airtable
+- Recoil
+- Tailwind
+- next-auth
+- Stripe
+- Supabase
